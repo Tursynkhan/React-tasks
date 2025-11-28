@@ -5,7 +5,7 @@
 **tursynkhan001@gmail.com**
 
 **Telegram:** @tursynkhan01
-**GitHub:** https://github.com/Tursynkhan
+**GitHub:** [https://github.com/Tursynkhan](https://github.com/Tursynkhan)
 
 ---
 
@@ -17,9 +17,9 @@
 ---
 
 ### RS School Profile Screenshot
-![RS School Profile](./image.png)
+![RS School Profile](./profile.png)
 
 ---
 
 ### Social Media
-LinkedIn: https://www.linkedin.com/in/tursynkhan
+LinkedIn: [https://www.linkedin.com/in/tursynkhan](https://www.linkedin.com/in/tursynkhan)
