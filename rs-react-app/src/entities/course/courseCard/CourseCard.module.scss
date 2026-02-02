@@ -1,0 +1,22 @@
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  .left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+  }
+}
