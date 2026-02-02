@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px 30px;
+
+  .nav {
+    display: flex;
+    gap: 26px;
+    .author {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
