@@ -1,5 +1,12 @@
 import { Button } from '@mui/material';
 
-export default function ShowCourses() {
-  return <Button variant="contained">Show Courses</Button>;
+interface ShowCoursesProps {
+  onClick: () => void;
+}
+export default function ShowCourses({ onClick }: ShowCoursesProps) {
+  return (
+    <Button variant="contained" onClick={onClick}>
+      Show Courses
+    </Button>
+  );
 }

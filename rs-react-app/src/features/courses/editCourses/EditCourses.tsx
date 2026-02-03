@@ -1,10 +1,10 @@
 import Button from '@mui/material/Button';
-import Icon from '@mui/material/Icon';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function EditCourses() {
   return (
     <Button>
-      <Icon>edit</Icon>
+      <EditIcon />
     </Button>
   );
 }

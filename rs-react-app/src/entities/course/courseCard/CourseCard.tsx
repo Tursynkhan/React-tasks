@@ -2,17 +2,14 @@ import DeleteCourses from '../../../features/courses/deleteCourses/DeleteCourses
 import EditCourses from '../../../features/courses/editCourses/EditCourses';
 import ShowCourses from '../../../features/courses/showCourses/ShowCourses';
 import styles from './CourseCard.module.scss';
+import { type Course } from '../model/types';
 
 interface CourseCardProps {
-  id: string;
-  title: string;
-  duration: number;
-  creationDate: string;
-  description: string;
-  authors: string[];
+  course: Course;
+  onShowCourse: (course: Course) => void;
 }
 
-export default function CourseCard({ course }: { course: CourseCardProps }) {
+export default function CourseCard({ course, onShowCourse }: CourseCardProps) {
   return (
     <div className={styles.content}>
       <div className={styles.left}>
@@ -26,7 +23,7 @@ export default function CourseCard({ course }: { course: CourseCardProps }) {
           <p>Creation Date: {course.creationDate}</p>
         </div>
         <div className={styles.actions}>
-          <ShowCourses />
+          <ShowCourses onClick={() => onShowCourse(course)} />
           <EditCourses />
           <DeleteCourses />
         </div>

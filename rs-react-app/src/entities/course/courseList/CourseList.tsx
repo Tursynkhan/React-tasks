@@ -3,11 +3,19 @@ import { mockedCoursesList } from '../model/mockCoursesList';
 import CourseCard from '../courseCard/CourseCard';
 import styles from './CourseList.module.scss';
 
-export default function CourseList() {
+interface CourseListProps {
+  onShowCourse: (course: Course) => void;
+}
+
+export default function CourseList({ onShowCourse }: CourseListProps) {
   return (
     <div className={styles.list}>
       {mockedCoursesList.map((course: Course) => (
-        <CourseCard key={course.id} course={course} />
+        <CourseCard
+          key={course.id}
+          course={course}
+          onShowCourse={onShowCourse}
+        />
       ))}
     </div>
   );
