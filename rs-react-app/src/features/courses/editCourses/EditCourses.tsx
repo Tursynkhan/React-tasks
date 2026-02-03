@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 export default function EditCourses() {
   return (
-    <Button>
+    <Button variant="contained">
       <EditIcon />
     </Button>
   );

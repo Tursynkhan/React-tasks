@@ -1,12 +1,21 @@
-import SearchCourses from '../../features/courses/searchCourses/SearchCourses';
-import AddNewCourses from '../../features/courses/addNewCourses/AddNewCourses';
-import styles from './SearchBar.module.scss';
+import { SearchCourses } from '@/features/courses';
+import { AddNewCourses } from '@/features/courses';
+import { Box } from '@mui/material';
 
-export default function SearchBar() {
+interface SearchBarProps {
+  query: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => void;
+}
+export default function SearchBar({
+  query,
+  onChange,
+  onClick,
+}: SearchBarProps) {
   return (
-    <div className={styles.container}>
-      <SearchCourses />
+    <Box component={'div'} display={'flex'} justifyContent={'space-between'}>
+      <SearchCourses onChange={onChange} onClick={onClick} query={query} />
       <AddNewCourses />
-    </div>
+    </Box>
   );
 }

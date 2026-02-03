@@ -1,6 +1,6 @@
-import { type Course } from '../../entities/course/model/types';
-import { Button } from '@mui/material';
-import CourseInfoCard from '../../entities/course/courseInfo/CourseInfo';
+import { type Course } from '@/entities/course';
+import { Button, Box, Typography } from '@mui/material';
+import { CourseInfoCard } from '@/entities/course';
 
 interface CoursesInfoProps {
   course: Course;
@@ -9,12 +9,20 @@ interface CoursesInfoProps {
 
 export default function CoursesInfo({ course, onBack }: CoursesInfoProps) {
   return (
-    <div className="container">
-      <h2>{course.title}</h2>
+    <Box
+      component={'div'}
+      display={'flex'}
+      flexDirection={'column'}
+      gap={2}
+      mt={4}
+    >
+      <Typography variant="h4" component="h2">
+        {course.title}
+      </Typography>
       <CourseInfoCard course={course} />
       <Button variant="contained" onClick={onBack}>
         Back
       </Button>
-    </div>
+    </Box>
   );
 }

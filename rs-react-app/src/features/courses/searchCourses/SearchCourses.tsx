@@ -1,11 +1,26 @@
-import { Button } from '@mui/material';
-import Input from '@mui/material/Input';
+import { Button, Box } from '@mui/material';
+import SearchInput from '@/shared/ui/SearchInput/SearchInput';
 
-export default function SearchCourses() {
+interface SearchCoursesProps {
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => void;
+  query: string;
+}
+export default function SearchCourses({
+  onChange,
+  onClick,
+  query,
+}: SearchCoursesProps) {
   return (
-    <div className="searchBar">
-      <Input placeholder="Search courses" color="primary" />
-      <Button variant="contained">Search</Button>
-    </div>
+    <Box component="div" display="flex" alignItems="center" gap={2}>
+      <SearchInput
+        placeholder="Search courses"
+        value={query}
+        onChange={onChange}
+      />
+      <Button variant="contained" onClick={onClick}>
+        Search
+      </Button>
+    </Box>
   );
 }

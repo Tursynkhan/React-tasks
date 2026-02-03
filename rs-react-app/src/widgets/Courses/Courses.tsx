@@ -1,10 +1,21 @@
-import CourseList from '../../entities/course/courseList/CourseList';
-// import styles from './Courses.module.scss';
-import { type Course } from '../../entities/course/model/types';
+import { CourseList } from '@/entities/course';
+import { type Course } from '@/entities/course';
 
 interface CoursesProps {
+  courses: Course[];
   onShowCourse: (course: Course) => void;
+  onDeleteCourse: (courseId: string) => void;
 }
-export default function Courses({ onShowCourse }: CoursesProps) {
-  return <CourseList onShowCourse={onShowCourse} />;
+export default function Courses({
+  courses,
+  onShowCourse,
+  onDeleteCourse,
+}: CoursesProps) {
+  return (
+    <CourseList
+      courses={courses}
+      onShowCourse={onShowCourse}
+      onDeleteCourse={onDeleteCourse}
+    />
+  );
 }
