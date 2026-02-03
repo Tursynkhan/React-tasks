@@ -4,10 +4,12 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-body {
+body,
+.main {
   margin: 0 auto;
   padding: 20px 40px 40px 40px;
   max-width: 1440px;
+  min-height: 100vh;
 }
 
 a {
