@@ -19,9 +19,22 @@ export default function CourseCard({
   const authorNames = getAuthorNames(course.authors).join(', ');
 
   return (
-    <Card sx={{ border: '1px solid #ccc' }}>
-      <CardContent>
-        <Box display="grid" gridTemplateColumns="2fr 1fr" gap={5}>
+    <Card
+      sx={{
+        border: '1px solid #ccc',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <CardContent
+        sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+      >
+        <Box
+          display="grid"
+          gridTemplateColumns={{ xs: '1fr', md: '2fr 1fr' }}
+          gap={{ xs: 3, md: 5 }}
+        >
           <Stack spacing={1.25}>
             <Typography variant="h5" component="h2">
               {course.title}

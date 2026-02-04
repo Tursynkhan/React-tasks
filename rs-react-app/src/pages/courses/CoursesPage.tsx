@@ -92,8 +92,9 @@ export default function CoursesPage() {
           flexDirection="column"
           gap={2}
           mt={3}
+          width="100%"
         >
-          {filteredCourses.length === 0 ? (
+          {courses.length === 0 ? (
             <EmptyCoursesList onAddCourse={handleRestoreCourses} />
           ) : (
             <>
@@ -102,11 +103,13 @@ export default function CoursesPage() {
                 onClick={handleSearchClick}
                 query={searchInput}
               />
-              <Courses
-                courses={filteredCourses}
-                onShowCourse={handleShowCourse}
-                onDeleteCourse={handleDeleteCourse}
-              />
+              {filteredCourses.length > 0 && (
+                <Courses
+                  courses={filteredCourses}
+                  onShowCourse={handleShowCourse}
+                  onDeleteCourse={handleDeleteCourse}
+                />
+              )}
             </>
           )}
         </Box>
