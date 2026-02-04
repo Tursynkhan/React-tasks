@@ -44,18 +44,9 @@ export default function CourseCard({
             </Typography>
           </Stack>
 
-          <Stack spacing={3.75}>
+          <Stack spacing={3.75} sx={{ minWidth: 0 }}>
             <CardContent sx={{ padding: 0 }}>
-              <InfoField
-                label="Authors:"
-                className={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {authorNames}
-              </InfoField>
+              <InfoField label="Authors:">{authorNames}</InfoField>
               <InfoField label="Duration:">
                 {formatDuration(course.duration)}
               </InfoField>
