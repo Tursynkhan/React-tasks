@@ -29,7 +29,7 @@ export default function CourseInfoCard({ course }: CourseInfoProps) {
             </Typography>
           </Box>
 
-          <Stack spacing={1.25}>
+          <Stack spacing={1.25} sx={{ minWidth: 0 }}>
             <InfoField label="ID:">{course.id}</InfoField>
             <InfoField label="Duration:">
               {formatDuration(course.duration)}
