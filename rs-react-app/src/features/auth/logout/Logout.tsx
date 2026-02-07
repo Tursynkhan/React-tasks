@@ -1,5 +1,12 @@
 import Button from '@mui/material/Button';
 
-export default function Logout() {
-  return <Button variant="contained">Logout</Button>;
+interface LogoutProps {
+  onLogout(): void;
+}
+export default function Logout({ onLogout }: LogoutProps) {
+  return (
+    <Button variant="contained" onClick={onLogout}>
+      Logout
+    </Button>
+  );
 }

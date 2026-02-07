@@ -1,7 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import Logout from '@/features/auth/logout/Logout';
 
-export default function Header() {
+interface HeaderProps {
+  onLogout(): void;
+  username?: string;
+  isAuthenticated: boolean;
+}
+
+export default function Header({
+  onLogout,
+  username,
+  isAuthenticated,
+}: HeaderProps) {
   return (
     <Box
       component="header"
@@ -19,10 +29,12 @@ export default function Header() {
         sx={{ height: 50 }}
       />
       <Box component="nav" display="flex" alignItems="center" gap={2}>
-        <Typography variant="subtitle1" component="div" alignItems={'center'}>
-          Harry Potter
-        </Typography>
-        <Logout />
+        {username && (
+          <Typography variant="subtitle1" component="div" alignItems={'center'}>
+            {username}
+          </Typography>
+        )}
+        {isAuthenticated && <Logout onLogout={onLogout} />}
       </Box>
     </Box>
   );
