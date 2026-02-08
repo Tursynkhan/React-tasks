@@ -3,76 +3,41 @@ import Courses from '@/widgets/Courses/Courses';
 import SearchBar from '@/widgets/SearchBar/SearchBar';
 import CoursesInfo from '@/widgets/CoursesInfo/CoursesInfo';
 import EmptyCoursesList from '@/widgets/EmptyCoursesList/EmptyCoursesList';
-import { type Course } from '@/entities/course/model/types';
 import { mockedCoursesList } from '@/entities/course/model/mockCoursesList';
 import { Box } from '@mui/material';
+import { useSelectedCourse, useDeletedCourses, useSeachCourses } from './model';
 
 export default function CoursesPage() {
-  const [selectedCourse, setSelectedCourse] = React.useState<Course | null>(
-    null
+  const { selectedCourse, showCourse, clearCourse } = useSelectedCourse();
+
+  const { deletedCourseIds, deleteCourse, restoreCourses } =
+    useDeletedCourses();
+
+  const courses = React.useMemo(
+    () =>
+      mockedCoursesList.filter(
+        (course) => !deletedCourseIds.includes(course.id)
+      ),
+    [deletedCourseIds]
   );
 
-  const [searchInput, setSearchInput] = React.useState('');
-
-  const [deletedCourseIds, setDeletedCourseIds] = React.useState<string[]>(
-    () => {
-      const savedIds = localStorage.getItem('deletedCourseIds');
-      return savedIds ? JSON.parse(savedIds) : [];
-    }
-  );
-
-  const courses = mockedCoursesList.filter((course) =>
-    deletedCourseIds.includes(course.id) ? false : true
-  );
-
-  const [filteredCourses, setFilteredCourses] =
-    React.useState<Course[]>(courses);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value);
-  };
-
-  const handleSearchClick = () => {
-    if (searchInput.trim() === '') {
-      setFilteredCourses(courses);
-    } else {
-      setFilteredCourses(
-        courses.filter((course) => {
-          return (
-            course.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-            course.description.toLowerCase().includes(searchInput.toLowerCase())
-          );
-        })
-      );
-    }
-  };
-
-  const handleShowCourse = (course: Course) => {
-    setSelectedCourse(course);
-  };
+  const {
+    searchInput,
+    filteredCourses,
+    onInputChange,
+    onSearchClick,
+    onResetSearch,
+  } = useSeachCourses(courses);
 
   const handleBackToCourses = () => {
-    setSelectedCourse(null);
-    setSearchInput('');
-    setFilteredCourses(courses);
-  };
-
-  const handleDeleteCourse = (courseId: string) => {
-    const updatedDeletedIds = [...deletedCourseIds, courseId];
-    setDeletedCourseIds(updatedDeletedIds);
-    localStorage.setItem('deletedCourseIds', JSON.stringify(updatedDeletedIds));
+    clearCourse();
+    onResetSearch();
   };
 
   const handleRestoreCourses = () => {
-    setDeletedCourseIds([]);
-    localStorage.removeItem('deletedCourseIds');
-    setSearchInput('');
-    setFilteredCourses(mockedCoursesList);
+    restoreCourses();
+    onResetSearch();
   };
-
-  React.useEffect(() => {
-    setFilteredCourses(courses);
-  }, [deletedCourseIds]);
 
   return (
     <Box
@@ -99,15 +64,15 @@ export default function CoursesPage() {
           ) : (
             <>
               <SearchBar
-                onChange={handleInputChange}
-                onClick={handleSearchClick}
+                onChange={onInputChange}
+                onClick={onSearchClick}
                 query={searchInput}
               />
               {filteredCourses.length > 0 && (
                 <Courses
                   courses={filteredCourses}
-                  onShowCourse={handleShowCourse}
-                  onDeleteCourse={handleDeleteCourse}
+                  onShowCourse={showCourse}
+                  onDeleteCourse={deleteCourse}
                 />
               )}
             </>
