@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, FormControl, FormLabel, TextField, Button } from '@mui/material';
 import { loginApi } from '../api/loginApi';
+import { useLoginValidation } from '@/shared/utils/hooks';
 
 type LoginFormProps = {
   onLogin: (token: string, username: string) => void;
@@ -9,9 +10,13 @@ type LoginFormProps = {
 export default function LoginForm({ onLogin }: LoginFormProps) {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const { error, validateForm, setGeneralError } = useLoginValidation();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!validateForm(username, password)) {
+      return;
+    }
     try {
       const response = await loginApi(username, password);
 
@@ -21,6 +26,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
       onLogin(response.accessToken, response.username || username);
     } catch (error) {
       console.error('Login failed:', error);
+      setGeneralError('Login failed. Please try again.');
     }
   };
 
@@ -43,6 +49,8 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
           variant="outlined"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
+          error={!!error.username}
+          helperText={error.username}
         />
       </FormControl>
       <FormControl>
@@ -53,8 +61,15 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
           variant="outlined"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
+          error={!!error.password}
+          helperText={error.password}
         />
       </FormControl>
+      {error.general && (
+        <Box color="error.main" textAlign="center">
+          {error.general}
+        </Box>
+      )}
       <Button type="submit" variant="contained" color="primary">
         Login
       </Button>
