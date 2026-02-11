@@ -4,21 +4,18 @@ import Logout from '@/features/auth/logout/Logout';
 interface HeaderProps {
   onLogout(): void;
   username?: string;
-  isAuthenticated: boolean;
 }
 
-export default function Header({
-  onLogout,
-  username,
-  isAuthenticated,
-}: HeaderProps) {
+export default function Header({ onLogout, username }: HeaderProps) {
   return (
     <Box
       component="header"
       display="flex"
       justifyContent="space-between"
       alignItems="center"
-      padding={2}
+      padding={{ xs: 1, sm: 1.5, md: 2 }}
+      flexWrap="wrap"
+      gap={{ xs: 1, sm: 2 }}
     >
       <Box
         component="img"
@@ -26,15 +23,28 @@ export default function Header({
         alignItems={'center'}
         src="/course_logo.svg"
         alt="Logo"
-        sx={{ height: 50 }}
+        sx={{ height: { xs: 35, sm: 40, md: 50 } }}
       />
-      <Box component="nav" display="flex" alignItems="center" gap={2}>
+      <Box
+        component="nav"
+        display="flex"
+        alignItems="center"
+        gap={{ xs: 1, sm: 2 }}
+      >
         {username && (
-          <Typography variant="subtitle1" component="div" alignItems={'center'}>
+          <Typography
+            variant="subtitle1"
+            component="div"
+            alignItems={'center'}
+            sx={{
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              display: { xs: 'none', sm: 'block' },
+            }}
+          >
             {username}
           </Typography>
         )}
-        {isAuthenticated && <Logout onLogout={onLogout} />}
+        {username && <Logout onLogout={onLogout} />}
       </Box>
     </Box>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, FormControl, FormLabel, TextField, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../api/loginApi';
 import { useLoginValidation } from '@/shared/utils/hooks';
 
@@ -8,6 +9,7 @@ type LoginFormProps = {
 };
 
 export default function LoginForm({ onLogin }: LoginFormProps) {
+  const navigate = useNavigate();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const { error, validateForm, setGeneralError } = useLoginValidation();
@@ -24,6 +26,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         throw new Error('Invalid login response');
       }
       onLogin(response.accessToken, response.username || username);
+      navigate('/courses');
     } catch (error) {
       console.error('Login failed:', error);
       setGeneralError('Login failed. Please try again.');
