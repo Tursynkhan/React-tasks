@@ -1,17 +1,18 @@
 import { type Course } from '../model/types';
 import CourseCard from '../courseCard/CourseCard';
 import { Box } from '@mui/material';
-
 interface CourseListProps {
   courses: Course[];
   onShowCourse: (course: Course) => void;
   onDeleteCourse: (courseId: string) => void;
+  onUpdateCourse?: () => void;
 }
 
 export default function CourseList({
   courses,
   onShowCourse,
   onDeleteCourse,
+  onUpdateCourse,
 }: CourseListProps) {
   return (
     <Box
@@ -27,6 +28,7 @@ export default function CourseList({
           course={course}
           onShowCourse={onShowCourse}
           onDeleteCourse={onDeleteCourse}
+          onUpdateCourse={onUpdateCourse}
         />
       ))}
     </Box>

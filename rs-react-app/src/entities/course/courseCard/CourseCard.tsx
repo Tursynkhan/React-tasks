@@ -2,22 +2,25 @@ import { type Course } from '../model/types';
 import { DeleteCourses, EditCourses, ShowCourses } from '@/features/courses';
 import InfoField from '@/shared/ui/InfoField/InfoField';
 import { Card, CardContent, Typography, Box, Stack } from '@mui/material';
-import { getAuthorNames } from '../model/helpers';
-import { formatDuration, formatCreationDate } from '@/shared/utils/helpers';
+import {
+  formatDuration,
+  formatCreationDate,
+  formatAuthors,
+} from '@/shared/utils/helpers';
 
 interface CourseCardProps {
   course: Course;
   onShowCourse: (course: Course) => void;
   onDeleteCourse: (courseId: string) => void;
+  onUpdateCourse?: () => void;
 }
 
 export default function CourseCard({
   course,
   onShowCourse,
   onDeleteCourse,
+  onUpdateCourse,
 }: CourseCardProps) {
-  const authorNames = getAuthorNames(course.authors).join(', ');
-
   return (
     <Card
       sx={{
@@ -46,7 +49,9 @@ export default function CourseCard({
 
           <Stack spacing={3.75} sx={{ minWidth: 0 }}>
             <CardContent sx={{ padding: 0 }}>
-              <InfoField label="Authors:">{authorNames}</InfoField>
+              <InfoField label="Authors:">
+                {formatAuthors(course.authors)}
+              </InfoField>
               <InfoField label="Duration:">
                 {formatDuration(course.duration)}
               </InfoField>
@@ -55,9 +60,13 @@ export default function CourseCard({
               </InfoField>
             </CardContent>
 
-            <Stack direction="row" spacing={1}>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={1}
+              sx={{ width: { xs: '100%', sm: 'auto' } }}
+            >
               <ShowCourses onClick={() => onShowCourse(course)} />
-              <EditCourses />
+              <EditCourses course={course} onSuccess={onUpdateCourse} />
               <DeleteCourses onClick={() => onDeleteCourse(course.id)} />
             </Stack>
           </Stack>

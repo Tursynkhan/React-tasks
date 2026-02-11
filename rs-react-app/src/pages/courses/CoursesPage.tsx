@@ -1,25 +1,15 @@
-import React from 'react';
 import Courses from '@/widgets/Courses/Courses';
 import SearchBar from '@/widgets/SearchBar/SearchBar';
 import CoursesInfo from '@/widgets/CoursesInfo/CoursesInfo';
 import EmptyCoursesList from '@/widgets/EmptyCoursesList/EmptyCoursesList';
-import { mockedCoursesList } from '@/entities/course/model/mockCoursesList';
-import { Box } from '@mui/material';
-import { useSelectedCourse, useDeletedCourses, useSeachCourses } from './model';
+import Loading from '@/shared/ui/Loading/Loading';
+import ErrorMessage from '@/shared/ui/ErrorMessage/ErrorMessage';
+import { Box, Typography } from '@mui/material';
+import { useCourses, useSeachCourses, useSelectedCourse } from './model';
 
 export default function CoursesPage() {
   const { selectedCourse, showCourse, clearCourse } = useSelectedCourse();
-
-  const { deletedCourseIds, deleteCourse, restoreCourses } =
-    useDeletedCourses();
-
-  const courses = React.useMemo(
-    () =>
-      mockedCoursesList.filter(
-        (course) => !deletedCourseIds.includes(course.id)
-      ),
-    [deletedCourseIds]
-  );
+  const { courses, removeCourse, error, loading, fetchCourses } = useCourses();
 
   const {
     searchInput,
@@ -34,9 +24,20 @@ export default function CoursesPage() {
     onResetSearch();
   };
 
-  const handleRestoreCourses = () => {
-    restoreCourses();
-    onResetSearch();
+  const handleDeleteCourse = async (courseId: string) => {
+    try {
+      await removeCourse(courseId);
+    } catch (error) {
+      console.error('Failed to delete course:', error);
+    }
+  };
+
+  const handleUpdateCourse = async () => {
+    try {
+      await fetchCourses();
+    } catch (error) {
+      console.error('Failed to refresh courses:', error);
+    }
   };
 
   return (
@@ -45,10 +46,14 @@ export default function CoursesPage() {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      gap={2}
-      padding={2}
+      gap={{ xs: 1, sm: 2 }}
+      padding={{ xs: 0, sm: 1, md: 2 }}
     >
-      {selectedCourse ? (
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <ErrorMessage message={error} />
+      ) : selectedCourse ? (
         <CoursesInfo course={selectedCourse} onBack={handleBackToCourses} />
       ) : (
         <Box
@@ -60,20 +65,33 @@ export default function CoursesPage() {
           width="100%"
         >
           {courses.length === 0 ? (
-            <EmptyCoursesList onAddCourse={handleRestoreCourses} />
+            <EmptyCoursesList onAddCourse={handleUpdateCourse} />
           ) : (
             <>
               <SearchBar
                 onChange={onInputChange}
                 onClick={onSearchClick}
                 query={searchInput}
+                onAddCourse={handleUpdateCourse}
               />
-              {filteredCourses.length > 0 && (
+              {filteredCourses.length > 0 ? (
                 <Courses
                   courses={filteredCourses}
                   onShowCourse={showCourse}
-                  onDeleteCourse={deleteCourse}
+                  onDeleteCourse={handleDeleteCourse}
+                  onUpdateCourse={handleUpdateCourse}
                 />
+              ) : (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="200px"
+                >
+                  <Typography variant="h6" color="text.secondary">
+                    Course not found
+                  </Typography>
+                </Box>
               )}
             </>
           )}

@@ -20,6 +20,7 @@ export default function SearchInput({
       size={size}
       onChange={onChange}
       value={value}
+      sx={{ width: { xs: '100%', sm: 'auto' }, minWidth: { sm: 250 } }}
     />
   );
 }

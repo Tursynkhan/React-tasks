@@ -1,8 +1,9 @@
-import { Box, Typography, Button } from '@mui/material';
+import { AddNewCourses } from '@/features/courses';
+import { Box, Typography } from '@mui/material';
 
-interface EmptyCoursesListProps {
-  onAddCourse: () => void;
-}
+type EmptyCoursesListProps = {
+  onAddCourse?: () => void;
+};
 
 export default function EmptyCoursesList({
   onAddCourse,
@@ -14,18 +15,27 @@ export default function EmptyCoursesList({
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      gap={2}
-      minHeight="50vh"
+      gap={{ xs: 1.5, sm: 2 }}
+      minHeight={{ xs: '40vh', sm: '50vh' }}
+      px={{ xs: 2, sm: 0 }}
     >
-      <Typography variant="h6" gutterBottom>
+      <Typography
+        variant="h6"
+        gutterBottom
+        sx={{ fontSize: { xs: '1.125rem', sm: '1.25rem' } }}
+      >
         Your List Is Empty
       </Typography>
-      <Typography variant="body1">
+      <Typography
+        variant="body1"
+        sx={{
+          fontSize: { xs: '0.875rem', sm: '1rem' },
+          textAlign: 'center',
+        }}
+      >
         Please use ’Add New Course’ button to add your first course
       </Typography>
-      <Button variant="contained" color="primary" onClick={onAddCourse}>
-        Add New Course
-      </Button>
+      <AddNewCourses onSuccess={onAddCourse} />
     </Box>
   );
 }

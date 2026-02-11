@@ -12,13 +12,24 @@ export default function SearchCourses({
   query,
 }: SearchCoursesProps) {
   return (
-    <Box component="div" display="flex" alignItems="center" gap={2}>
+    <Box
+      component="div"
+      display="flex"
+      flexDirection={{ xs: 'column', sm: 'row' }}
+      alignItems={{ xs: 'stretch', sm: 'center' }}
+      gap={{ xs: 1, sm: 2 }}
+      width={{ xs: '100%', sm: 'auto' }}
+    >
       <SearchInput
         placeholder="Search courses"
         value={query}
         onChange={onChange}
       />
-      <Button variant="contained" onClick={onClick}>
+      <Button
+        variant="contained"
+        onClick={onClick}
+        sx={{ minWidth: { xs: '100%', sm: 100 } }}
+      >
         Search
       </Button>
     </Box>
