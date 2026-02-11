@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://698a44f0c04d974bc6a1d22e.mockapi.io/api/authors';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/authors`;
 
 export async function getAuthors(): Promise<{ id: string; name: string }[]> {
   const response = await fetch(API_BASE_URL, {
