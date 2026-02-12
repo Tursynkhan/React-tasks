@@ -3,7 +3,7 @@ import { type Course } from '@/entities/course';
 
 interface CoursesProps {
   courses: Course[];
-  onShowCourse: (course: Course) => void;
+  onShowCourse: (courseId: string) => void;
   onDeleteCourse: (courseId: string) => void;
   onUpdateCourse?: () => void;
 }

@@ -3,7 +3,7 @@ import CourseCard from '../courseCard/CourseCard';
 import { Box } from '@mui/material';
 interface CourseListProps {
   courses: Course[];
-  onShowCourse: (course: Course) => void;
+  onShowCourse: (courseId: string) => void;
   onDeleteCourse: (courseId: string) => void;
   onUpdateCourse?: () => void;
 }

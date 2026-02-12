@@ -8,7 +8,13 @@ import { Box, Typography } from '@mui/material';
 import { useCourses, useSeachCourses, useSelectedCourse } from './model';
 
 export default function CoursesPage() {
-  const { selectedCourse, showCourse, clearCourse } = useSelectedCourse();
+  const {
+    selectedCourse,
+    showCourse,
+    clearCourse,
+    loading: courseLoading,
+    error: courseError,
+  } = useSelectedCourse();
   const { courses, removeCourse, error, loading, fetchCourses } = useCourses();
 
   const {
@@ -53,6 +59,10 @@ export default function CoursesPage() {
         <Loading />
       ) : error ? (
         <ErrorMessage message={error} />
+      ) : courseLoading ? (
+        <Loading />
+      ) : courseError ? (
+        <ErrorMessage message={courseError} />
       ) : selectedCourse ? (
         <CoursesInfo course={selectedCourse} onBack={handleBackToCourses} />
       ) : (

@@ -10,7 +10,7 @@ import {
 
 interface CourseCardProps {
   course: Course;
-  onShowCourse: (course: Course) => void;
+  onShowCourse: (courseId: string) => void;
   onDeleteCourse: (courseId: string) => void;
   onUpdateCourse?: () => void;
 }
@@ -65,7 +65,7 @@ export default function CourseCard({
               spacing={1}
               sx={{ width: { xs: '100%', sm: 'auto' } }}
             >
-              <ShowCourses onClick={() => onShowCourse(course)} />
+              <ShowCourses onClick={() => onShowCourse(course.id)} />
               <EditCourses course={course} onSuccess={onUpdateCourse} />
               <DeleteCourses onClick={() => onDeleteCourse(course.id)} />
             </Stack>
