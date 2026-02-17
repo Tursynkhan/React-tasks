@@ -14,13 +14,7 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
   return (
     <FormControl>
       <FormLabel htmlFor={rest.name}>{label}</FormLabel>
-      <TextField
-        ref={ref}
-        id={rest.name}
-        error={!!rest.error}
-        helperText={rest.helperText}
-        {...rest}
-      />
+      <TextField ref={ref} id={rest.name} {...rest} />
     </FormControl>
   );
 });
