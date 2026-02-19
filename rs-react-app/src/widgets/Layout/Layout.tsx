@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import Header from '../Header/Header';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,8 +13,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         },
         maxWidth: '1440px',
         minHeight: '100vh',
+        position: 'relative',
       }}
     >
+      <Header />
       {children}
     </Box>
   );
