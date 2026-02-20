@@ -1,6 +1,6 @@
 import React from 'react';
 import { loginApi } from '@/features/auth/login/api/loginApi';
-import type { UserRole } from '@/features/auth/login/api/loginApi';
+import type { UserRole } from '@/shared/types';
 import { AuthContext, type User } from './AuthContext';
 
 export { AuthContext };
@@ -17,15 +17,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const login = async (data: { email: string; password: string }) => {
-    const response = await loginApi(data.email, data.password);
+    const response = await loginApi(data);
 
-    localStorage.setItem('token', response.token);
-    localStorage.setItem('username', response.name);
-    localStorage.setItem('role', response.role);
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('username', response.data.name);
+    localStorage.setItem('role', response.data.role);
     setUser({
-      token: response.token,
-      username: response.name,
-      role: response.role,
+      token: response.data.token,
+      username: response.data.name,
+      role: response.data.role,
     });
   };
 

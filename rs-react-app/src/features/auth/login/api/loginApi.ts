@@ -1,7 +1,11 @@
+import type { UserRole } from '@/shared/types';
+
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-export type UserRole = 'admin' | 'user' | 'guest';
-
+interface BaseResponse<T> {
+  data: T;
+  message: string;
+}
 interface LoginResponse {
   id: number;
   name: string;
@@ -10,10 +14,11 @@ interface LoginResponse {
   token: string;
 }
 
-export async function loginApi(
-  email: string,
-  password: string
-): Promise<LoginResponse> {
+export async function loginApi(query: {
+  email: string;
+  password: string;
+}): Promise<BaseResponse<LoginResponse>> {
+  const { email, password } = query;
   const response = await fetch(`${API_URL}/me/login`, {
     method: 'POST',
     headers: {

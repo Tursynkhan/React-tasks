@@ -1,5 +1,5 @@
 import React from 'react';
-import type { UserRole } from '@/features/auth/login/api/loginApi';
+import type { UserRole } from '@/shared/types';
 
 export interface User {
   username: string;

@@ -16,9 +16,11 @@
     "@hookform/resolvers": "^5.2.2",
     "@mui/icons-material": "^7.3.8",
     "@mui/material": "^7.3.8",
+    "@reduxjs/toolkit": "^2.11.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.71.1",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.0",
     "zod": "^4.3.6"
   },
