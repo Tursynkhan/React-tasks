@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/app/providers/useAuth';
+import { useAppSelector } from '../store/store';
+import { selectIsAuthenticated } from '@/shared/model/authSlice/authSlice';
 
 export function ProtectedRoute() {
-  const { user } = useAuth();
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-  if (!user?.token) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-
   return <Outlet />;
 }
