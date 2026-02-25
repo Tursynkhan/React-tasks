@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Box } from '@mui/material';
 import SearchInput from '@/shared/ui/SearchInput/SearchInput';
 import { useSearchParams } from 'react-router-dom';
+import { COLORS } from '@/shared/config/theme/palette';
 
 export default function SearchMovie() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,11 +38,23 @@ export default function SearchMovie() {
         placeholder="What do you want to watch?"
         value={searchInput}
         onChange={handleChange}
+        sx={{
+          bgcolor: '#323232',
+          color: COLORS.white,
+          borderRadius: '4px',
+          fontSize: 16,
+          '& input::placeholder': { color: COLORS.muted, opacity: 1 },
+        }}
       />
       <Button
         variant="contained"
         onClick={handleOnClick}
-        sx={{ minWidth: { xs: '100%', sm: 100 } }}
+        sx={{
+          bgcolor: COLORS.accent,
+          color: COLORS.white,
+          textTransform: 'uppercase',
+          borderRadius: '4px',
+        }}
       >
         Search
       </Button>
