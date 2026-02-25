@@ -56,10 +56,14 @@ export const movieSlice = createSlice({
       });
   },
   selectors: {
-    selectStatus: (state) => state.status,
+    selectMoviesStatus: (state) => state.status,
+    selectMovies: (state) => state.movies,
+    selectMoviesError: (state) => state.errorMessage,
   },
 });
 
 export const { clearError } = movieSlice.actions;
-export const { selectStatus } = movieSlice.selectors;
+export const { selectMoviesError, selectMovies, selectMoviesStatus } =
+  movieSlice.selectors;
+  
 export default movieSlice.reducer;
