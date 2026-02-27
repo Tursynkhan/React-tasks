@@ -3,7 +3,6 @@ import {
   Toolbar,
   Typography,
   Box,
-  Menu,
   MenuItem,
   Avatar,
   Button,
@@ -18,7 +17,7 @@ import {
   logout,
 } from '@/shared/model/authSlice/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import Menu from '@/shared/ui/Menu';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -28,8 +27,6 @@ export default function Header() {
   const role = useSelector(selectRole);
 
   const userInitial = userName?.[0] ?? 'U';
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   const handleAddMovie = () => {
     navigate('/movie/add');
@@ -40,7 +37,7 @@ export default function Header() {
   return (
     <Box>
       <AppBar
-        position="fixed"
+        position="absolute"
         elevation={0}
         sx={{ height: '77px', bgcolor: 'transparent' }}
       >
@@ -72,29 +69,25 @@ export default function Header() {
             )}
 
             {isAuthentificated ? (
-              <>
-                <IconButton
-                  onClick={(event) => setAnchorEl(event.currentTarget)}
-                  sx={{ p: 0 }}
-                >
-                  <Avatar
-                    sx={{
-                      width: 32,
-                      height: 32,
-                      bgcolor: 'rgba(255,255,255,0.16)',
-                      color: COLORS.white,
-                      fontSize: 14,
-                      fontWeight: 600,
-                    }}
-                  >
-                    {userInitial}
-                  </Avatar>
-                </IconButton>
+              <Menu>
+                <Menu.Button>
+                  <IconButton sx={{ p: 0 }}>
+                    <Avatar
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        bgcolor: 'rgba(255,255,255,0.16)',
+                        color: COLORS.white,
+                        fontSize: 14,
+                        fontWeight: 600,
+                      }}
+                    >
+                      {userInitial}
+                    </Avatar>
+                  </IconButton>
+                </Menu.Button>
 
-                <Menu
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={() => setAnchorEl(null)}
+                <Menu.Content
                   PaperProps={{
                     sx: {
                       bgcolor: COLORS.bg,
@@ -121,7 +114,6 @@ export default function Header() {
                   <MenuItem
                     onClick={() => {
                       dispatch(logout());
-                      setAnchorEl(null);
                     }}
                     sx={{
                       justifyContent: 'center',
@@ -136,8 +128,8 @@ export default function Header() {
                   >
                     Logout
                   </MenuItem>
-                </Menu>
-              </>
+                </Menu.Content>
+              </Menu>
             ) : (
               <Button
                 variant="contained"
