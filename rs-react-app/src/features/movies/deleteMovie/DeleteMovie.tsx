@@ -1,0 +1,45 @@
+import ConfirmDialog from '@/shared/ui/ConfirmDialog/ConfirmDialog';
+import { MenuItem } from '@mui/material';
+import { useAppDispatch } from '@/app/store/store';
+import { deleteMovie } from '@/shared/model/movieSlice/movieSlice';
+import { useMenuContext } from '@/shared/ui/Menu/useMenuContext';
+import { toast } from 'react-toastify';
+
+export default function DeleteMovie({ movieId }: { movieId: number }) {
+  const dispatch = useAppDispatch();
+  const { closeMenu } = useMenuContext();
+
+  const handleConfirmDelete = async (movieId: number) => {
+    const toastId = toast.loading('Deleting movie...');
+
+    try {
+      await dispatch(deleteMovie(movieId)).unwrap();
+      toast.update(toastId, {
+        render: 'Movie deleted successfully!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000,
+      });
+      closeMenu();
+    } catch {
+      toast.update(toastId, {
+        render: 'Failed to delete movie',
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
+  };
+
+  return (
+    <ConfirmDialog
+      title="Delete Movie"
+      description="Are you sure you want to delete this movie?"
+      onConfirm={() => {
+        handleConfirmDelete(movieId);
+      }}
+    >
+      {(onClick) => <MenuItem onClick={onClick}>Delete</MenuItem>}
+    </ConfirmDialog>
+  );
+}
