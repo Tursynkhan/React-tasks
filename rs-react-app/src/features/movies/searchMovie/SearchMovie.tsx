@@ -7,7 +7,7 @@ import { COLORS } from '@/shared/config/theme/palette';
 export default function SearchMovie() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchInput, setSearchInput] = React.useState(
-    searchParams.get('q') || ''
+    searchParams.get('search') || ''
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,9 +18,9 @@ export default function SearchMovie() {
     event.preventDefault();
     const newSearchParams = new URLSearchParams(searchParams);
     if (searchInput) {
-      newSearchParams.set('q', searchInput);
+      newSearchParams.set('search', searchInput);
     } else {
-      newSearchParams.delete('q');
+      newSearchParams.delete('search');
     }
     setSearchParams(newSearchParams);
   };

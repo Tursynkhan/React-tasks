@@ -11,9 +11,10 @@ import DeleteMovie from '@/features/movies/deleteMovie/DeleteMovie';
 
 interface MovieCardProps {
   movie: MovieItem;
+  onClick: () => void;
 }
 
-export default function MovieCard({ movie }: MovieCardProps) {
+export default function MovieCard({ movie, onClick }: MovieCardProps) {
   const navigate = useNavigate();
   const role = useAppSelector(selectRole);
   const year = movie.release_date ? movie.release_date.slice(0, 4) : '';
@@ -27,10 +28,13 @@ export default function MovieCard({ movie }: MovieCardProps) {
       sx={{
         position: 'relative',
       }}
+      component="div"
+      onClick={onClick}
     >
       {role === 'admin' && (
         <Box
           className="menu-button"
+          onClick={(e) => e.stopPropagation()}
           sx={{
             position: 'absolute',
             top: 10,
@@ -61,7 +65,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
               >
                 Edit
               </MenuItem>
-              <DeleteMovie movieId={movie.id} />
+              <DeleteMovie movieId={movie.id} isMenu />
             </Menu.Content>
           </Menu>
         </Box>

@@ -2,6 +2,10 @@ import type { MovieItem, MoviesParams } from '../model/types';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
+interface BaseResponse<T> {
+  data: T;
+  message: string;
+}
 interface MovieResponse<T> {
   data: T;
   totalAmount?: number;
@@ -49,6 +53,23 @@ export async function movieApi(
 
   if (!response.ok) {
     throw new Error('Login failed');
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchMovieByIdApi(
+  id: number
+): Promise<BaseResponse<MovieItem>> {
+  const response = await fetch(`${API_URL}/movies/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error('FethMovieById failed');
   }
 
   const data = await response.json();

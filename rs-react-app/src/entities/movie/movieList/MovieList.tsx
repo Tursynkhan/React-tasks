@@ -11,19 +11,27 @@ import {
   selectMoviesStatus,
 } from '@/shared/model/movieSlice/movieSlice';
 import { COLORS } from '@/shared/config/theme/palette';
-// import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 export default function MovieList() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get('search') ?? '';
+  console.log(search);
   const dispatch = useAppDispatch();
   const movies = useAppSelector(selectMovies);
   const status = useAppSelector(selectMoviesStatus);
   // const error = useAppSelector(selectMoviesError);
 
-  // const [searchParams] = useSearchParams();
-
   React.useEffect(() => {
-    if (status === 'idle') dispatch(fetchMovie({}));
-  }, [status]);
+    if (status === 'idle') dispatch(fetchMovie({ search }));
+  }, [status, search]);
+
+  const handleOpenCard = (id: number) => {
+    console.log('movieId', id);
+    navigate(`/${id}`);
+  };
 
   return (
     <Box sx={{ px: 7.5, bgcolor: COLORS.bg }}>
@@ -40,7 +48,13 @@ export default function MovieList() {
         }}
       >
         {movies.map((m) => (
-          <MovieCard key={m.id} movie={m} />
+          <MovieCard
+            key={m.id}
+            movie={m}
+            onClick={() => {
+              handleOpenCard(m.id);
+            }}
+          />
         ))}
       </Box>
     </Box>

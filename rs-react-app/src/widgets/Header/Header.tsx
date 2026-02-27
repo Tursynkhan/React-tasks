@@ -29,7 +29,7 @@ export default function Header() {
   const userInitial = userName?.[0] ?? 'U';
 
   const handleAddMovie = () => {
-    navigate('/movie/add');
+    navigate('/create-movie');
   };
   const handleLogin = () => {
     navigate('/login');

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { movieApi } from '@/entities/movie/api/movieApi';
+import { movieApi, fetchMovieByIdApi } from '@/entities/movie/api/movieApi';
 import { deleteMovieApi } from '@/features/movies/deleteMovie/api/deleteMovieApi';
 import type { MovieItem, MoviesParams } from '@/entities/movie/model/types';
 
@@ -10,6 +10,8 @@ interface MovieState {
   status: Status;
   errorMessage: string | null;
   deleteStatus: Status;
+  currentMovie: MovieItem | null;
+  currentMovieStatus: Status;
 }
 
 export const fetchMovie = createAsyncThunk(
@@ -40,11 +42,27 @@ export const deleteMovie = createAsyncThunk(
   }
 );
 
+export const fetchMovieById = createAsyncThunk(
+  'movies/fetchMovieById',
+  async (movieId: number, { rejectWithValue }) => {
+    try {
+      const response = await fetchMovieByIdApi(movieId);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Fetch movie by Id failed'
+      );
+    }
+  }
+);
+
 const initialState: MovieState = {
   movies: [],
   status: 'idle',
   errorMessage: null,
   deleteStatus: 'idle',
+  currentMovie: null,
+  currentMovieStatus: 'idle',
 };
 
 export const movieSlice = createSlice({
@@ -71,6 +89,21 @@ export const movieSlice = createSlice({
         state.errorMessage =
           (action.payload as string) ?? 'Failed to fetch Movie';
       })
+      .addCase(fetchMovieById.pending, (state) => {
+        state.currentMovieStatus = 'loading';
+        state.errorMessage = null;
+      })
+      .addCase(fetchMovieById.fulfilled, (state, action) => {
+        state.currentMovie = action.payload;
+        state.currentMovieStatus = 'success';
+        state.errorMessage = null;
+      })
+      .addCase(fetchMovieById.rejected, (state, action) => {
+        state.currentMovieStatus = 'error';
+        state.errorMessage =
+          (action.payload as string) ?? 'Failed to fetch movie by ID';
+      })
+
       .addCase(deleteMovie.pending, (state) => {
         state.deleteStatus = 'loading';
         state.errorMessage = null;
@@ -93,6 +126,8 @@ export const movieSlice = createSlice({
     selectMovies: (state) => state.movies,
     selectMoviesError: (state) => state.errorMessage,
     selectDeleteStatus: (state) => state.deleteStatus,
+    selectCurrentMovie: (state) => state.currentMovie,
+    selectCurrentMovieStatus: (state) => state.currentMovieStatus,
   },
 });
 
@@ -102,6 +137,8 @@ export const {
   selectMovies,
   selectMoviesStatus,
   selectDeleteStatus,
+  selectCurrentMovie,
+  selectCurrentMovieStatus,
 } = movieSlice.selectors;
 
 export default movieSlice.reducer;
