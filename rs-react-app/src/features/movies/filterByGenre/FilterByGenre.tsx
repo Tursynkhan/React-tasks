@@ -2,22 +2,46 @@ import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import GenreTabs from './ui/GenreTabs';
 import { COLORS } from '@/shared/config/theme/palette';
-
-const genres = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'] as const;
+import { useAppSelector } from '@/app/store/store';
 
 export default function FilterByGenre() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeGenre = searchParams.get('genres') || 'ALL';
+  const activeGenre = searchParams.get('filter') || 'ALL';
+  const search = searchParams.get('search') || '';
+
+  const availableGenres = useAppSelector((state) => {
+    const movieState = state.movie;
+    let filtered = movieState.movies;
+
+    if (search.trim()) {
+      filtered = filtered.filter(
+        (movie) =>
+          movie.title.toLowerCase().includes(search.toLowerCase()) ||
+          movie.overview.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    const genres = new Set<string>();
+    filtered.forEach((movie) => {
+      movie.genres.forEach((genre) => {
+        genres.add(genre.toUpperCase());
+      });
+    });
+
+    return Array.from(genres).sort();
+  });
 
   const handleGenreClick = (genre: string) => {
     const newSearchParams = new URLSearchParams(searchParams);
     if (genre === 'ALL') {
-      newSearchParams.delete('genres');
+      newSearchParams.delete('filter');
     } else {
-      newSearchParams.set('genres', genre);
+      newSearchParams.set('filter', genre);
     }
     setSearchParams(newSearchParams);
   };
+
+  const allGenres = ['ALL', ...availableGenres];
 
   return (
     <Box
@@ -30,7 +54,7 @@ export default function FilterByGenre() {
         py: 2,
       }}
     >
-      {genres.map((genre) => (
+      {allGenres.map((genre) => (
         <GenreTabs
           key={genre}
           genre={genre}

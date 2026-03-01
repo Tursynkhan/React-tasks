@@ -14,8 +14,7 @@ export default function SearchMovie() {
     setSearchInput(event.target.value);
   };
 
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleSearch = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     if (searchInput) {
       newSearchParams.set('search', searchInput);
@@ -23,6 +22,18 @@ export default function SearchMovie() {
       newSearchParams.delete('search');
     }
     setSearchParams(newSearchParams);
+  };
+
+  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    handleSearch();
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSearch();
+    }
   };
 
   return (
@@ -38,6 +49,7 @@ export default function SearchMovie() {
         placeholder="What do you want to watch?"
         value={searchInput}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         sx={{
           bgcolor: '#323232',
           color: COLORS.white,

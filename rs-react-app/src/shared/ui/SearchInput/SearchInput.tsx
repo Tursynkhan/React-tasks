@@ -8,6 +8,7 @@ import { COLORS } from '@/shared/config/theme/palette';
 interface SearchInputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   size?: TextFieldProps['size'];
   sx?: SxProps<Theme>;
@@ -16,6 +17,7 @@ interface SearchInputProps {
 export default function SearchInput({
   value,
   onChange,
+  onKeyDown,
   placeholder = 'Search...',
   size = 'small',
   sx,
@@ -26,6 +28,7 @@ export default function SearchInput({
       variant="outlined"
       size={size}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       value={value}
       sx={{
         width: { xs: '100%', sm: 'auto' },
