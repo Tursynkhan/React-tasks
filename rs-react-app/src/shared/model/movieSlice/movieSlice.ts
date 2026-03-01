@@ -1,6 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { movieApi, fetchMovieByIdApi } from '@/entities/movie/api/movieApi';
 import { deleteMovieApi } from '@/features/movies/deleteMovie/api/deleteMovieApi';
+import {
+  createMovieApi,
+  type CreateMovieData,
+} from '@/features/movies/createMovie/api/createMovie';
+import {
+  editMovieApi,
+  type EditMovieData,
+} from '@/features/movies/editMovie/api/editMovieApi';
 import type { MovieItem, MoviesParams } from '@/entities/movie/model/types';
 
 type Status = 'idle' | 'success' | 'error' | 'loading';
@@ -10,6 +18,8 @@ interface MovieState {
   status: Status;
   errorMessage: string | null;
   deleteStatus: Status;
+  createStatus: Status;
+  editStatus: Status;
   currentMovie: MovieItem | null;
   currentMovieStatus: Status;
 }
@@ -42,6 +52,37 @@ export const deleteMovie = createAsyncThunk(
   }
 );
 
+export const createMovie = createAsyncThunk(
+  'movies/createMovie',
+  async (movieData: CreateMovieData, { rejectWithValue }) => {
+    try {
+      const response = await createMovieApi(movieData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Create movie failed'
+      );
+    }
+  }
+);
+
+export const editMovie = createAsyncThunk(
+  'movies/editMovie',
+  async (
+    { movieId, movieData }: { movieId: number; movieData: EditMovieData },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await editMovieApi(movieId, movieData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Edit movie failed'
+      );
+    }
+  }
+);
+
 export const fetchMovieById = createAsyncThunk(
   'movies/fetchMovieById',
   async (movieId: number, { rejectWithValue }) => {
@@ -61,6 +102,8 @@ const initialState: MovieState = {
   status: 'idle',
   errorMessage: null,
   deleteStatus: 'idle',
+  createStatus: 'idle',
+  editStatus: 'idle',
   currentMovie: null,
   currentMovieStatus: 'idle',
 };
@@ -70,6 +113,14 @@ export const movieSlice = createSlice({
   initialState,
   reducers: {
     clearError(state) {
+      state.errorMessage = null;
+    },
+    resetCreateStatus(state) {
+      state.createStatus = 'idle';
+      state.errorMessage = null;
+    },
+    resetEditStatus(state) {
+      state.editStatus = 'idle';
       state.errorMessage = null;
     },
   },
@@ -119,6 +170,40 @@ export const movieSlice = createSlice({
         state.deleteStatus = 'error';
         state.errorMessage =
           (action.payload as string) ?? 'Failed to delete movie';
+      })
+
+      .addCase(createMovie.pending, (state) => {
+        state.createStatus = 'loading';
+        state.errorMessage = null;
+      })
+      .addCase(createMovie.fulfilled, (state, action) => {
+        state.movies.push(action.payload);
+        state.createStatus = 'success';
+        state.errorMessage = null;
+      })
+      .addCase(createMovie.rejected, (state, action) => {
+        state.createStatus = 'error';
+        state.errorMessage =
+          (action.payload as string) ?? 'Failed to create movie';
+      })
+
+      .addCase(editMovie.pending, (state) => {
+        state.editStatus = 'loading';
+        state.errorMessage = null;
+      })
+      .addCase(editMovie.fulfilled, (state, action) => {
+        const index = state.movies.findIndex((m) => m.id === action.payload.id);
+        if (index !== -1) {
+          state.movies[index] = action.payload;
+        }
+        state.currentMovie = action.payload;
+        state.editStatus = 'success';
+        state.errorMessage = null;
+      })
+      .addCase(editMovie.rejected, (state, action) => {
+        state.editStatus = 'error';
+        state.errorMessage =
+          (action.payload as string) ?? 'Failed to edit movie';
       });
   },
   selectors: {
@@ -126,17 +211,22 @@ export const movieSlice = createSlice({
     selectMovies: (state) => state.movies,
     selectMoviesError: (state) => state.errorMessage,
     selectDeleteStatus: (state) => state.deleteStatus,
+    selectCreateStatus: (state) => state.createStatus,
+    selectEditStatus: (state) => state.editStatus,
     selectCurrentMovie: (state) => state.currentMovie,
     selectCurrentMovieStatus: (state) => state.currentMovieStatus,
   },
 });
 
-export const { clearError } = movieSlice.actions;
+export const { clearError, resetCreateStatus, resetEditStatus } =
+  movieSlice.actions;
 export const {
   selectMoviesError,
   selectMovies,
   selectMoviesStatus,
   selectDeleteStatus,
+  selectCreateStatus,
+  selectEditStatus,
   selectCurrentMovie,
   selectCurrentMovieStatus,
 } = movieSlice.selectors;

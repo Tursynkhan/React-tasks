@@ -7,6 +7,7 @@ import Field from '@/shared/ui/Field/Field';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
 import { login, selectStatus } from '@/shared/model/authSlice/authSlice';
 import { useNavigate } from 'react-router-dom';
+
 const schema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string(),
