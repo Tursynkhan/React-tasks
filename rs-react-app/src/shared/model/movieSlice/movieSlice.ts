@@ -15,6 +15,7 @@ type Status = 'idle' | 'success' | 'error' | 'loading';
 
 interface MovieState {
   movies: MovieItem[];
+  totalAmount: number;
   status: Status;
   errorMessage: string | null;
   deleteStatus: Status;
@@ -29,7 +30,7 @@ export const fetchMovie = createAsyncThunk(
   async (query: MoviesParams = {}, { rejectWithValue }) => {
     try {
       const response = await movieApi(query);
-      return response.data;
+      return response;
     } catch (error) {
       return rejectWithValue(
         error instanceof Error ? error.message : 'Fetch movie failed'
@@ -99,6 +100,7 @@ export const fetchMovieById = createAsyncThunk(
 
 const initialState: MovieState = {
   movies: [],
+  totalAmount: 0,
   status: 'idle',
   errorMessage: null,
   deleteStatus: 'idle',
@@ -131,7 +133,8 @@ export const movieSlice = createSlice({
         state.errorMessage = null;
       })
       .addCase(fetchMovie.fulfilled, (state, action) => {
-        state.movies = action.payload;
+        state.movies = action.payload.data;
+        state.totalAmount = action.payload.filteredCount ?? 0;
         state.errorMessage = null;
         state.status = 'success';
       })
@@ -215,6 +218,7 @@ export const movieSlice = createSlice({
     selectEditStatus: (state) => state.editStatus,
     selectCurrentMovie: (state) => state.currentMovie,
     selectCurrentMovieStatus: (state) => state.currentMovieStatus,
+    selectTotalAmount: (state) => state.totalAmount,
   },
 });
 
@@ -229,6 +233,7 @@ export const {
   selectEditStatus,
   selectCurrentMovie,
   selectCurrentMovieStatus,
+  selectTotalAmount,
 } = movieSlice.selectors;
 
 export default movieSlice.reducer;

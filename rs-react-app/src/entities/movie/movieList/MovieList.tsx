@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Pagination } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
 import MoviesCount from './ui/MovieCount';
 import MovieCard from '../movieCard/MovieCard';
@@ -7,50 +7,79 @@ import {
   fetchMovie,
   selectMoviesError,
   selectMoviesStatus,
+  selectMovies,
+  selectTotalAmount,
 } from '@/shared/model/movieSlice/movieSlice';
 import { COLORS } from '@/shared/config/theme/palette';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+const ITEMS_PER_PAGE = 12;
+
 export default function MovieList() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') ?? '';
   const filter = searchParams.get('filter') ?? '';
+  const pageParam = searchParams.get('page');
+
+  const [page, setPage] = React.useState(pageParam ? Number(pageParam) : 1);
   const dispatch = useAppDispatch();
 
-  const movies = useAppSelector((state) => {
-    const movieState = state.movie;
-    let filtered = movieState.movies;
-
-    if (search.trim()) {
-      filtered = filtered.filter(
-        (movie) =>
-          movie.title.toLowerCase().includes(search.toLowerCase()) ||
-          movie.overview.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    if (filter && filter !== 'ALL') {
-      filtered = filtered.filter((movie) =>
-        movie.genres.some(
-          (genre) => genre.toLowerCase() === filter.toLowerCase()
-        )
-      );
-    }
-
-    return filtered;
-  });
-
+  const movies = useAppSelector(selectMovies);
+  const totalAmount = useAppSelector(selectTotalAmount);
   const status = useAppSelector(selectMoviesStatus);
   const error = useAppSelector(selectMoviesError);
 
+  const totalPages = Math.ceil(totalAmount / ITEMS_PER_PAGE);
+
+  const prevSearch = React.useRef(search);
+  const prevFilter = React.useRef(filter);
+
   React.useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchMovie({}));
+    const offset = (page - 1) * ITEMS_PER_PAGE;
+    const params: {
+      offset: number;
+      limit: number;
+      search?: string;
+      searchBy?: 'title' | 'genres';
+      filter?: string;
+    } = {
+      offset,
+      limit: ITEMS_PER_PAGE,
+    };
+
+    if (search.trim()) {
+      params.search = search.trim();
+      params.searchBy = 'title';
     }
-  }, [status, dispatch]);
+
+    if (filter && filter !== 'ALL') {
+      params.filter = filter;
+    }
+
+    dispatch(fetchMovie(params));
+  }, [page, search, filter, dispatch]);
+
+  React.useEffect(() => {
+    const pageParam = searchParams.get('page');
+    const newPage = pageParam ? Number(pageParam) : 1;
+    if (newPage !== page) {
+      setPage(newPage);
+    }
+  }, [searchParams, page]);
+
+  React.useEffect(() => {
+    if (prevSearch.current !== search || prevFilter.current !== filter) {
+      prevSearch.current = search;
+      prevFilter.current = filter;
+      setPage(1);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set('page', '1');
+      setSearchParams(newSearchParams, { replace: true });
+    }
+  }, [search, filter, searchParams, setSearchParams]);
 
   React.useEffect(() => {
     if (status === 'error' && error) {
@@ -61,6 +90,17 @@ export default function MovieList() {
   const handleOpenCard = (id: number) => {
     console.log('movieId', id);
     navigate(`/${id}`);
+  };
+
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set('page', String(value));
+    setSearchParams(newSearchParams);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (status === 'loading') {
@@ -80,8 +120,8 @@ export default function MovieList() {
   }
 
   return (
-    <Box sx={{ px: 7.5, bgcolor: COLORS.bg }}>
-      <MoviesCount count={movies.length} />
+    <Box sx={{ px: 7.5, bgcolor: COLORS.bg, pb: 4 }}>
+      <MoviesCount count={totalAmount} />
       <Box
         sx={{
           display: 'grid',
@@ -91,6 +131,7 @@ export default function MovieList() {
             md: 'repeat(4, minmax(0, 1fr))',
           },
           gap: 2.5,
+          mb: 4,
         }}
       >
         {movies.map((m) => (
@@ -103,6 +144,26 @@ export default function MovieList() {
           />
         ))}
       </Box>
+      {totalPages > 1 && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+            size="large"
+            sx={{
+              '& .MuiPaginationItem-root': {
+                color: COLORS.white,
+              },
+              '& .MuiPaginationItem-root.Mui-selected': {
+                backgroundColor: COLORS.accent,
+                color: COLORS.white,
+              },
+            }}
+          />
+        </Box>
+      )}
     </Box>
   );
 }

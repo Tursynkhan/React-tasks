@@ -8,6 +8,7 @@ interface BaseResponse<T> {
 }
 interface MovieResponse<T> {
   data: T;
+  filteredCount: number;
   totalAmount?: number;
   offset?: number;
   limit?: number;
