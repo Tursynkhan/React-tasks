@@ -30,7 +30,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/:movieId" element={<MovieDetailsPage />} />
-            <Route path="/:movieid/edit-movie" element={<EditMoviePage />} />
+            <Route path="/:movieId/edit-movie" element={<EditMoviePage />} />
             <Route path="/create-movie" element={<CreateMoviePage />} />
           </Route>
         </Routes>

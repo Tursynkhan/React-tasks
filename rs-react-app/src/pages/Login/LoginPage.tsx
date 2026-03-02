@@ -1,9 +1,18 @@
-import LoginForm from '@/features/auth/login/ui/LoginForm';
+import React from 'react';
+import LoginForm, {
+  type LoginFormRef,
+} from '@/features/auth/login/ui/LoginForm';
 import Dialog from '@/shared/ui/Dialog/Dialog';
 import { Button } from '@mui/material';
 import { COLORS } from '@/shared/config/theme/palette';
 
 export default function LoginPage() {
+  const formRef = React.useRef<LoginFormRef>(null);
+
+  const handleReset = () => {
+    formRef.current?.reset();
+  };
+
   return (
     <Dialog
       open
@@ -14,6 +23,7 @@ export default function LoginPage() {
         <>
           <Button
             variant="outlined"
+            onClick={handleReset}
             sx={{
               borderColor: COLORS.accent,
               color: COLORS.accent,
@@ -37,7 +47,7 @@ export default function LoginPage() {
         </>
       }
     >
-      <LoginForm />
+      <LoginForm ref={formRef} />
     </Dialog>
   );
 }

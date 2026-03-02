@@ -1,17 +1,20 @@
+import React from 'react';
 import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import GenreTabs from './ui/GenreTabs';
 import { COLORS } from '@/shared/config/theme/palette';
 import { useAppSelector } from '@/app/store/store';
+import { selectMovies } from '@/shared/model/movieSlice/movieSlice';
 
 export default function FilterByGenre() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeGenre = searchParams.get('filter') || 'ALL';
   const search = searchParams.get('search') || '';
 
-  const availableGenres = useAppSelector((state) => {
-    const movieState = state.movie;
-    let filtered = movieState.movies;
+  const movies = useAppSelector(selectMovies);
+
+  const availableGenres = React.useMemo(() => {
+    let filtered = movies;
 
     if (search.trim()) {
       filtered = filtered.filter(
@@ -29,7 +32,7 @@ export default function FilterByGenre() {
     });
 
     return Array.from(genres).sort();
-  });
+  }, [movies, search]);
 
   const handleGenreClick = (genre: string) => {
     const newSearchParams = new URLSearchParams(searchParams);
@@ -41,7 +44,10 @@ export default function FilterByGenre() {
     setSearchParams(newSearchParams);
   };
 
-  const allGenres = ['ALL', ...availableGenres];
+  const allGenres = React.useMemo(
+    () => ['ALL', ...availableGenres],
+    [availableGenres]
+  );
 
   return (
     <Box

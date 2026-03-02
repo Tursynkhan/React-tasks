@@ -5,8 +5,13 @@ import Box from '@mui/material/Box';
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import Field from '@/shared/ui/Field/Field';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
-import { login, selectStatus } from '@/shared/model/authSlice/authSlice';
+import {
+  login,
+  selectAuthError,
+  selectStatus,
+} from '@/shared/model/authSlice/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const schema = z.object({
   email: z.string().email('Invalid email address'),
@@ -14,18 +19,27 @@ const schema = z.object({
 });
 type LoginFormValues = z.infer<typeof schema>;
 
-export default function LoginForm() {
+export interface LoginFormRef {
+  reset: () => void;
+}
+
+const LoginForm = React.forwardRef<LoginFormRef>((_props, ref) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectStatus);
+  const errorMessage = useAppSelector(selectAuthError);
 
-  const { control, handleSubmit } = useForm<LoginFormValues>({
+  const { control, handleSubmit, reset } = useForm<LoginFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
+
+  React.useImperativeHandle(ref, () => ({
+    reset,
+  }));
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     await dispatch(login(data));
@@ -35,7 +49,10 @@ export default function LoginForm() {
     if (status === 'success') {
       navigate('/');
     }
-  }, [status]);
+    if (status === 'error') {
+      toast.error(errorMessage);
+    }
+  }, [status, navigate]);
 
   return (
     <Box
@@ -79,4 +96,8 @@ export default function LoginForm() {
       />
     </Box>
   );
-}
+});
+
+LoginForm.displayName = 'LoginForm';
+
+export default LoginForm;

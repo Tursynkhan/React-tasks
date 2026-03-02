@@ -16,18 +16,25 @@ import {
   selectCreateStatus,
   selectEditStatus,
   selectMoviesError,
-  resetCreateStatus,
-  resetEditStatus,
 } from '@/shared/model/movieSlice/movieSlice';
 
 const schema = z.object({
   title: z.string().min(1, 'Title is required'),
   release_date: z.string().min(1, 'Release date is required'),
-  poster_path: z.string().url('Poster URL must be a valid url'),
-  vote_average: z.number().min(0).max(10),
-  runtime: z.number().int().positive('Runtime must be > 0'),
+  poster_path: z
+    .string()
+    .min(1, 'Poster URL is required')
+    .url('Poster URL must be a valid url'),
+  vote_average: z
+    .number('Rating is required')
+    .min(0, 'Rating must be at least 0')
+    .max(10, 'Rating must be at most 10'),
+  runtime: z
+    .number('Runtime is required')
+    .int('Runtime must be an integer')
+    .positive('Runtime must be greater than 0'),
   overview: z.string().min(1, 'Overview is required'),
-  genres: z.array(z.string()).min(1, 'at least one genre required'),
+  genres: z.array(z.string()).min(1, 'At least one genre is required'),
 });
 
 type MovieFormValues = z.infer<typeof schema>;
@@ -53,14 +60,14 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
 
     const { control, handleSubmit, reset } = useForm<MovieFormValues>({
       resolver: zodResolver(schema),
-      defaultValues: initialValues || {
-        title: '',
-        release_date: '',
-        poster_path: '',
-        vote_average: 0,
-        runtime: 0,
-        genres: [],
-        overview: '',
+      defaultValues: {
+        title: initialValues?.title || '',
+        release_date: initialValues?.release_date || '',
+        poster_path: initialValues?.poster_path || '',
+        vote_average: initialValues?.vote_average || 0,
+        runtime: initialValues?.runtime || 0,
+        genres: initialValues?.genres || [],
+        overview: initialValues?.overview || '',
       },
     });
 
@@ -90,17 +97,7 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
 
     React.useEffect(() => {
       if (status === 'success') {
-        const message =
-          mode === 'create'
-            ? 'Movie created successfully!'
-            : 'Movie updated successfully!';
-        toast.success(message);
         reset();
-        if (mode === 'create') {
-          dispatch(resetCreateStatus());
-        } else {
-          dispatch(resetEditStatus());
-        }
         navigate('/');
       } else if (status === 'error' && errorMessage) {
         toast.error(errorMessage);
@@ -136,6 +133,7 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
                 label="Title"
                 type="text"
                 placeholder="Movie title"
+                required
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
               />
@@ -167,6 +165,7 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
                 label="Poster URL"
                 type="text"
                 placeholder="https://"
+                required
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
               />
@@ -184,6 +183,7 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
                 label="Rating"
                 type="number"
                 placeholder="7.8"
+                required
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
               />
@@ -217,6 +217,7 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
                 label="Runtime"
                 type="number"
                 placeholder="in minutes"
+                required
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
               />
@@ -233,6 +234,7 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
                   rows={3}
                   label="Overview"
                   placeholder="Movie description"
+                  required
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
                 />

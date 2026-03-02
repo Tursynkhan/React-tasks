@@ -26,7 +26,7 @@ export async function editMovieApi(
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(movieData),
+    body: JSON.stringify({ ...movieData, id: movieId }),
   });
 
   if (!response.ok) {

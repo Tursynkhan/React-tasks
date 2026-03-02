@@ -24,10 +24,13 @@ export default function EditMoviePage() {
   const status = useAppSelector(selectCurrentMovieStatus);
 
   React.useEffect(() => {
-    if (movieId) {
-      dispatch(fetchMovieById(Number(movieId)));
+    if (!movieId || isNaN(Number(movieId))) {
+      toast.error('Invalid movie ID');
+      navigate('/');
+      return;
     }
-  }, [movieId, dispatch]);
+    dispatch(fetchMovieById(Number(movieId)));
+  }, [movieId, dispatch, navigate]);
 
   React.useEffect(() => {
     if (status === 'error') {
@@ -78,20 +81,22 @@ export default function EditMoviePage() {
         </>
       }
     >
-      <MovieForm
-        ref={formRef}
-        mode="edit"
-        movieId={Number(movieId)}
-        initialValues={{
-          title: currentMovie?.title,
-          release_date: currentMovie?.release_date,
-          poster_path: currentMovie?.poster_path,
-          vote_average: currentMovie?.vote_average,
-          runtime: currentMovie?.runtime,
-          overview: currentMovie?.overview,
-          genres: currentMovie?.genres,
-        }}
-      />
+      {movieId && !isNaN(Number(movieId)) && (
+        <MovieForm
+          ref={formRef}
+          mode="edit"
+          movieId={Number(movieId)}
+          initialValues={{
+            title: currentMovie?.title,
+            release_date: currentMovie?.release_date,
+            poster_path: currentMovie?.poster_path,
+            vote_average: currentMovie?.vote_average,
+            runtime: currentMovie?.runtime,
+            overview: currentMovie?.overview,
+            genres: currentMovie?.genres,
+          }}
+        />
+      )}
     </Dialog>
   );
 }

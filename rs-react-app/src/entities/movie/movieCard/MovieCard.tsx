@@ -20,7 +20,7 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
   const year = movie.release_date ? movie.release_date.slice(0, 4) : '';
 
   function handleEdit(movieId: number) {
-    navigate(`/:${movieId}/edit-movie`);
+    navigate(`/${movieId}/edit-movie`);
   }
 
   return (

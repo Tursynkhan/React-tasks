@@ -9,11 +9,16 @@ import {
   selectMoviesStatus,
   selectMovies,
   selectTotalAmount,
+  selectCreateStatus,
+  selectEditStatus,
+  resetCreateStatus,
+  resetEditStatus,
 } from '@/shared/model/movieSlice/movieSlice';
 import { COLORS } from '@/shared/config/theme/palette';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import SuccessDialog from '@/shared/ui/SuccessDialog/SuccessDialog';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -31,6 +36,13 @@ export default function MovieList() {
   const totalAmount = useAppSelector(selectTotalAmount);
   const status = useAppSelector(selectMoviesStatus);
   const error = useAppSelector(selectMoviesError);
+  const createStatus = useAppSelector(selectCreateStatus);
+  const editStatus = useAppSelector(selectEditStatus);
+
+  const [showSuccessDialog, setShowSuccessDialog] = React.useState(false);
+  const [successType, setSuccessType] = React.useState<'create' | 'edit'>(
+    'create'
+  );
 
   const totalPages = Math.ceil(totalAmount / ITEMS_PER_PAGE);
 
@@ -87,8 +99,30 @@ export default function MovieList() {
     }
   }, [status, error]);
 
+  React.useEffect(() => {
+    if (createStatus === 'success') {
+      setSuccessType('create');
+      setShowSuccessDialog(true);
+    }
+  }, [createStatus]);
+
+  React.useEffect(() => {
+    if (editStatus === 'success') {
+      setSuccessType('edit');
+      setShowSuccessDialog(true);
+    }
+  }, [editStatus]);
+
+  const handleSuccessDialogClose = () => {
+    setShowSuccessDialog(false);
+    if (successType === 'create') {
+      dispatch(resetCreateStatus());
+    } else {
+      dispatch(resetEditStatus());
+    }
+  };
+
   const handleOpenCard = (id: number) => {
-    console.log('movieId', id);
     navigate(`/${id}`);
   };
 
@@ -119,51 +153,64 @@ export default function MovieList() {
     );
   }
 
+  const successMessage =
+    successType === 'create'
+      ? 'The movie has been added to database successfully'
+      : 'The movie has been updated successfully';
+
   return (
-    <Box sx={{ px: 7.5, bgcolor: COLORS.bg, pb: 4 }}>
-      <MoviesCount count={totalAmount} />
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: 'repeat(2, minmax(0, 1fr))',
-            sm: 'repeat(3, minmax(0, 1fr))',
-            md: 'repeat(4, minmax(0, 1fr))',
-          },
-          gap: 2.5,
-          mb: 4,
-        }}
-      >
-        {movies.map((m) => (
-          <MovieCard
-            key={m.id}
-            movie={m}
-            onClick={() => {
-              handleOpenCard(m.id);
-            }}
-          />
-        ))}
-      </Box>
-      {totalPages > 1 && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handlePageChange}
-            color="primary"
-            size="large"
-            sx={{
-              '& .MuiPaginationItem-root': {
-                color: COLORS.white,
-              },
-              '& .MuiPaginationItem-root.Mui-selected': {
-                backgroundColor: COLORS.accent,
-                color: COLORS.white,
-              },
-            }}
-          />
+    <>
+      <SuccessDialog
+        open={showSuccessDialog}
+        title="CONGRATULATIONS!"
+        message={successMessage}
+        onClose={handleSuccessDialogClose}
+      />
+      <Box sx={{ px: 7.5, bgcolor: COLORS.bg, pb: 4 }}>
+        <MoviesCount count={totalAmount} />
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: 'repeat(2, minmax(0, 1fr))',
+              sm: 'repeat(3, minmax(0, 1fr))',
+              md: 'repeat(4, minmax(0, 1fr))',
+            },
+            gap: 2.5,
+            mb: 4,
+          }}
+        >
+          {movies.map((m) => (
+            <MovieCard
+              key={m.id}
+              movie={m}
+              onClick={() => {
+                handleOpenCard(m.id);
+              }}
+            />
+          ))}
         </Box>
-      )}
-    </Box>
+        {totalPages > 1 && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={handlePageChange}
+              color="primary"
+              size="large"
+              sx={{
+                '& .MuiPaginationItem-root': {
+                  color: COLORS.white,
+                },
+                '& .MuiPaginationItem-root.Mui-selected': {
+                  backgroundColor: COLORS.accent,
+                  color: COLORS.white,
+                },
+              }}
+            />
+          </Box>
+        )}
+      </Box>
+    </>
   );
 }

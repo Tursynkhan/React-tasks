@@ -68,7 +68,10 @@ export default function ConfirmDialog({
 
         <DialogActions sx={{ px: 3, pb: 3 }}>
           <Button
-            onClick={onClose}
+            onClick={() => {
+              toggle();
+              onClose?.();
+            }}
             disabled={loading}
             variant="outlined"
             sx={{
@@ -81,7 +84,10 @@ export default function ConfirmDialog({
           </Button>
 
           <Button
-            onClick={onConfirm}
+            onClick={() => {
+              onConfirm();
+              toggle();
+            }}
             disabled={loading}
             variant="contained"
             disableElevation
