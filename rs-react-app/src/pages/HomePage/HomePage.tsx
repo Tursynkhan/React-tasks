@@ -7,8 +7,10 @@ export default function HomePage() {
   return (
     <Box>
       <Hero />
-      <MoviesToolbar />
-      <MovieList />
+      <Box sx={{ maxWidth: '1440px', margin: '0 auto' }}>
+        <MoviesToolbar />
+        <MovieList />
+      </Box>
     </Box>
   );
 }

@@ -56,8 +56,22 @@ export default function FilterByGenre() {
         gap: 3,
         alignItems: 'center',
         bgcolor: COLORS.bg,
-        px: 7.5,
+        px: { xs: 2, sm: 4, md: 7.5 },
         py: 2,
+        overflowX: 'auto',
+        '&::-webkit-scrollbar': {
+          height: 2,
+        },
+        '&::-webkit-scrollbar-track': {
+          bgcolor: COLORS.accent,
+        },
+        '&::-webkit-scrollbar-thumb': {
+          bgcolor: COLORS.muted,
+          borderRadius: '4px',
+          '&:hover': {
+            bgcolor: COLORS.accent,
+          },
+        },
       }}
     >
       {allGenres.map((genre) => (

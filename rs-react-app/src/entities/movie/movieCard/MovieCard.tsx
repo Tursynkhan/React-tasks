@@ -27,6 +27,7 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
     <Box
       sx={{
         position: 'relative',
+        cursor: 'pointer',
       }}
       component="div"
       onClick={onClick}
