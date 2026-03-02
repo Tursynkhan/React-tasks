@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Box } from '@mui/material';
+import { Box } from '@mui/material';
+import Button from '@/shared/ui/Button/Button';
 import SearchInput from '@/shared/ui/SearchInput/SearchInput';
 import { useSearchParams } from 'react-router-dom';
 import { COLORS } from '@/shared/config/theme/palette';
@@ -58,16 +59,7 @@ export default function SearchMovie() {
           '& input::placeholder': { color: COLORS.muted, opacity: 1 },
         }}
       />
-      <Button
-        variant="contained"
-        onClick={handleOnClick}
-        sx={{
-          bgcolor: COLORS.accent,
-          color: COLORS.white,
-          textTransform: 'uppercase',
-          borderRadius: '4px',
-        }}
-      >
+      <Button variant="contained" onClick={handleOnClick}>
         Search
       </Button>
     </Box>

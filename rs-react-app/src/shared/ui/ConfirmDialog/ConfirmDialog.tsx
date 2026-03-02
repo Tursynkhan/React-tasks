@@ -6,10 +6,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button,
   Typography,
   IconButton,
 } from '@mui/material';
+import Button from '@/shared/ui/Button/Button';
 import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {
@@ -74,11 +74,6 @@ export default function ConfirmDialog({
             }}
             disabled={loading}
             variant="outlined"
-            sx={{
-              borderRadius: '4px',
-              borderColor: COLORS.field,
-              color: COLORS.white,
-            }}
           >
             {cancelText}
           </Button>
@@ -90,11 +85,6 @@ export default function ConfirmDialog({
             }}
             disabled={loading}
             variant="contained"
-            disableElevation
-            sx={{
-              borderRadius: '4px',
-              bgcolor: COLORS.accent,
-            }}
           >
             {confirmText}
           </Button>

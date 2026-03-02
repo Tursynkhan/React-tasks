@@ -5,9 +5,9 @@ import {
   Box,
   MenuItem,
   Avatar,
-  Button,
   IconButton,
 } from '@mui/material';
+import Button from '@/shared/ui/Button/Button';
 import { COLORS } from '@/shared/config/theme/palette';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -55,14 +55,8 @@ export default function Header() {
             {role === 'admin' && (
               <Button
                 onClick={handleAddMovie}
-                variant="outlined"
-                sx={{
-                  borderRadius: 0,
-                  height: 40,
-                  px: 2.5,
-                  textTransform: 'uppercase',
-                  color: COLORS.accent,
-                }}
+                variant="admin"
+                sx={{ height: 40, px: 2.5, opacity: 0.7 }}
               >
                 + Add Movie
               </Button>
@@ -131,15 +125,7 @@ export default function Header() {
                 </Menu.Content>
               </Menu>
             ) : (
-              <Button
-                variant="contained"
-                disableElevation
-                onClick={handleLogin}
-                sx={{
-                  bgcolor: COLORS.accent,
-                  textTransform: 'uppercase',
-                }}
-              >
+              <Button variant="contained" onClick={handleLogin}>
                 Login
               </Button>
             )}

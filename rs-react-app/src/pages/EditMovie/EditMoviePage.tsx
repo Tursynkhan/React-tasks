@@ -1,12 +1,11 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import Button from '@/shared/ui/Button/Button';
 import { toast } from 'react-toastify';
 import Dialog from '@/shared/ui/Dialog/Dialog';
 import MovieForm, {
   type MovieFormHandle,
 } from '@/features/movieForm/ui/MovieForm';
-import { COLORS } from '@/shared/config/theme/palette';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
 import {
   fetchMovieById,
@@ -55,27 +54,10 @@ export default function EditMoviePage() {
       onClose={handleClose}
       actions={
         <>
-          <Button
-            variant="outlined"
-            onClick={handleReset}
-            sx={{
-              borderColor: COLORS.accent,
-              color: COLORS.accent,
-            }}
-          >
+          <Button variant="outlined" onClick={handleReset}>
             Reset
           </Button>
-          <Button
-            variant="contained"
-            disableElevation
-            type="submit"
-            form="add-movie-form"
-            sx={{
-              bgcolor: COLORS.accent,
-              color: COLORS.white,
-              textTransform: 'uppercase',
-            }}
-          >
+          <Button variant="contained" type="submit" form="add-movie-form">
             Save
           </Button>
         </>

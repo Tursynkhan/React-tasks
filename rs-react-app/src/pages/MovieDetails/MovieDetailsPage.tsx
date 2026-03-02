@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import Button from '@/shared/ui/Button/Button';
 import DeleteMovie from '@/features/movies/deleteMovie/DeleteMovie';
 import { COLORS } from '@/shared/config/theme/palette';
 import {
@@ -40,15 +41,7 @@ export default function MovieDetailsPage() {
           mb: 3,
         }}
       >
-        <Button
-          variant="outlined"
-          onClick={() => navigate('/')}
-          sx={{
-            borderRadius: '4px',
-            color: COLORS.accent,
-            textTransform: 'uppercase',
-          }}
-        >
+        <Button variant="admin" onClick={() => navigate('/')}>
           Go Back
         </Button>
       </Box>
@@ -130,15 +123,7 @@ export default function MovieDetailsPage() {
               <DeleteMovie movieId={id} />
               <Button
                 onClick={() => navigate(`/${movie?.id}/edit-movie`)}
-                variant="contained"
-                disableElevation
-                sx={{
-                  borderRadius: '4px',
-                  bgcolor: COLORS.field,
-                  color: COLORS.accent,
-                  textTransform: 'uppercase',
-                  '&:hover': { bgcolor: COLORS.muted },
-                }}
+                variant="admin"
               >
                 Edit
               </Button>

@@ -3,8 +3,7 @@ import LoginForm, {
   type LoginFormRef,
 } from '@/features/auth/login/ui/LoginForm';
 import Dialog from '@/shared/ui/Dialog/Dialog';
-import { Button } from '@mui/material';
-import { COLORS } from '@/shared/config/theme/palette';
+import Button from '@/shared/ui/Button/Button';
 
 export default function LoginPage() {
   const formRef = React.useRef<LoginFormRef>(null);
@@ -21,27 +20,10 @@ export default function LoginPage() {
       title="Login"
       actions={
         <>
-          <Button
-            variant="outlined"
-            onClick={handleReset}
-            sx={{
-              borderColor: COLORS.accent,
-              color: COLORS.accent,
-            }}
-          >
+          <Button variant="outlined" onClick={handleReset}>
             Reset
           </Button>
-          <Button
-            variant="contained"
-            disableElevation
-            type="submit"
-            form="login-form"
-            sx={{
-              bgcolor: COLORS.accent,
-              color: COLORS.white,
-              textTransform: 'uppercase',
-            }}
-          >
+          <Button variant="contained" type="submit" form="login-form">
             Login
           </Button>
         </>

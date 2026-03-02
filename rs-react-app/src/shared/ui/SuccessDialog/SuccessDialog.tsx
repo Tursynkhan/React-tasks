@@ -65,7 +65,14 @@ export default function SuccessDialog({
         />
 
         <DialogTitle
-          sx={{Mov}}
+          sx={{
+            color: COLORS.white,
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            fontSize: '40px',
+            fontWeight: '300',
+            pb: 1,
+          }}
         >
           {title}
         </DialogTitle>

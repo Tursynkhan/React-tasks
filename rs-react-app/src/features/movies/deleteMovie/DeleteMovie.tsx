@@ -1,11 +1,11 @@
 import React from 'react';
 import ConfirmDialog from '@/shared/ui/ConfirmDialog/ConfirmDialog';
-import { MenuItem, Button } from '@mui/material';
+import { MenuItem } from '@mui/material';
+import Button from '@/shared/ui/Button/Button';
 import { useAppDispatch } from '@/app/store/store';
 import { deleteMovie } from '@/shared/model/movieSlice/movieSlice';
 import { MenuContext } from '@/shared/ui/Menu/CompoundMenu';
 import { toast } from 'react-toastify';
-import { COLORS } from '@/shared/config/theme/palette';
 import { useNavigate } from 'react-router-dom';
 
 interface DeleteMovieProps {
@@ -56,19 +56,7 @@ export default function DeleteMovie({ movieId, isMenu }: DeleteMovieProps) {
         return isMenu ? (
           <MenuItem onClick={onClick}>Delete</MenuItem>
         ) : (
-          <Button
-            onClick={onClick}
-            variant="contained"
-            disableElevation
-            sx={{
-              borderRadius: 0,
-              minWidth: 140,
-              bgcolor: '#424242',
-              color: COLORS.accent,
-              textTransform: 'uppercase',
-              '&:hover': { bgcolor: '#4a4a4a' },
-            }}
-          >
+          <Button onClick={onClick} variant="admin" sx={{ minWidth: 140 }}>
             Delete
           </Button>
         );
