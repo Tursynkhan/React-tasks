@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import SearchMovie from '@/features/movies/searchMovie/SearchMovie';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 export default function Hero() {
   return (

@@ -1,33 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginApi } from '@/features/auth/login/api/loginApi';
+import { createSlice } from '@reduxjs/toolkit';
 import type { UserRole } from '@/shared/types';
-
-type Status = 'idle' | 'success' | 'error' | 'loading';
-interface AuthState {
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    role: UserRole;
-    token: string;
-  } | null;
-  status: Status;
-  errorMessage: string | null;
-}
-
-export const login = createAsyncThunk(
-  'auth/login',
-  async (query: { email: string; password: string }, { rejectWithValue }) => {
-    try {
-      const response = await loginApi(query);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : 'Login failed'
-      );
-    }
-  }
-);
+import type { AuthState } from './types';
+import { login } from './thunks';
 
 const initialState: AuthState = {
   user: (() => {

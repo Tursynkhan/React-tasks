@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { AdminRoute } from './AdminRoute';
-import authReducer from '@/shared/model/authSlice/authSlice';
+import authReducer from '@/shared/model/authSlice';
 
 const createMockStore = (authState = {}) => {
   return configureStore({

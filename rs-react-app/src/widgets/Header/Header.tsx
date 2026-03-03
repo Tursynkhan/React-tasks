@@ -7,17 +7,16 @@ import {
   Avatar,
   IconButton,
 } from '@mui/material';
-import Button from '@/shared/ui/Button/Button';
-import { COLORS } from '@/shared/config/theme/palette';
+import { Button, Menu } from '@/shared/ui';
+import { COLORS } from '@/shared/config';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectIsAuthenticated,
   selectName,
   selectRole,
   logout,
-} from '@/shared/model/authSlice/authSlice';
+} from '@/shared/model/authSlice';
 import { useNavigate } from 'react-router-dom';
-import Menu from '@/shared/ui/Menu';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ export default function Header() {
       <AppBar
         position="absolute"
         elevation={0}
-        sx={{ height: '77px', bgcolor: 'transparent' }}
+        sx={{ height: '77px', bgcolor: 'transparent', maxWidth: '1440px' }}
       >
         <Toolbar
           sx={{
@@ -53,7 +52,10 @@ export default function Header() {
             alignItems: 'center',
           }}
         >
-          <Typography onClick={handleLogoClick} sx={{ cursor: 'pointer' }}>
+          <Typography
+            onClick={handleLogoClick}
+            sx={{ cursor: 'pointer', color: COLORS.accent }}
+          >
             netflixroulette
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -73,11 +75,11 @@ export default function Header() {
                   <IconButton sx={{ p: 0 }}>
                     <Avatar
                       sx={{
-                        width: 32,
-                        height: 32,
-                        bgcolor: 'rgba(255,255,255,0.16)',
-                        color: COLORS.white,
-                        fontSize: 14,
+                        width: 40,
+                        height: 40,
+                        bgcolor: COLORS.muted,
+                        color: COLORS.accent,
+                        fontSize: 16,
                         fontWeight: 600,
                       }}
                     >
@@ -87,12 +89,18 @@ export default function Header() {
                 </Menu.Button>
 
                 <Menu.Content
+                  disableScrollLock={true}
                   PaperProps={{
                     sx: {
+                      mt: 1,
                       bgcolor: COLORS.bg,
                     },
                   }}
                   MenuListProps={{ sx: { p: 0 } }}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
                   transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',

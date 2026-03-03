@@ -8,7 +8,7 @@ import {
   type DialogProps,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 type Props = Omit<DialogProps, 'title'> & {
   title?: string;

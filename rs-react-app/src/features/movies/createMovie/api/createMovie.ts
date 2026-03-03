@@ -1,6 +1,5 @@
 import type { MovieItem } from '@/entities/movie/model/types';
-
-const API_URL = import.meta.env.VITE_API_BASE_URL;
+import { apiClient } from '@/shared/api/client';
 
 interface BaseResponse<T> {
   data: T;
@@ -20,18 +19,5 @@ export interface CreateMovieData {
 export async function createMovieApi(
   movieData: CreateMovieData
 ): Promise<BaseResponse<MovieItem>> {
-  const response = await fetch(`${API_URL}/movies`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(movieData),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to create movie');
-  }
-
-  const data = await response.json();
-  return data;
+  return apiClient.post<BaseResponse<MovieItem>>('/movies', movieData);
 }

@@ -6,7 +6,7 @@ import {
   FormLabel,
 } from '@mui/material';
 import Select, { type SelectChangeEvent } from '@mui/material/Select';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 type Option = { label: string; value: string };
 
@@ -47,7 +47,7 @@ export default function MultiSelect({
         sx={{
           color: COLORS.accent,
           textTransform: 'uppercase',
-          marginBottom: 1,
+          mb: 0.5,
         }}
       >
         {label}
@@ -59,11 +59,64 @@ export default function MultiSelect({
         value={value}
         onChange={handleChange}
         error={error}
+        displayEmpty
         renderValue={(selected) => {
           if (!selected?.length) {
-            return <>{placeholder}</>;
+            return (
+              <span style={{ color: COLORS.muted, fontSize: 14 }}>
+                {placeholder}
+              </span>
+            );
           }
           return selected.join(', ');
+        }}
+        sx={{
+          backgroundColor: COLORS.field,
+          color: COLORS.white,
+          fontSize: 14,
+          '& .MuiSelect-select': {
+            padding: '14px',
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: error ? COLORS.accent : 'rgba(255,255,255,0.23)',
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: error ? COLORS.accent : 'rgba(255,255,255,0.4)',
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: COLORS.accent,
+          },
+          '& .MuiSvgIcon-root': {
+            color: COLORS.accent,
+          },
+        }}
+        MenuProps={{
+          disableScrollLock: true,
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          PaperProps: {
+            sx: {
+              backgroundColor: COLORS.field,
+              color: COLORS.white,
+              maxHeight: 200,
+
+              '& .MuiMenuItem-root': {
+                fontSize: 14,
+                '&:hover': {
+                  backgroundColor: COLORS.field,
+                },
+                '&.Mui-selected': {
+                  backgroundColor: COLORS.accent,
+                },
+              },
+            },
+          },
         }}
       >
         {options.map((option) => (

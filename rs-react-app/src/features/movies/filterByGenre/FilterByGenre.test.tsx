@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import FilterByGenre from './FilterByGenre';
-import movieReducer from '@/shared/model/movieSlice/movieSlice';
+import movieReducer from '@/shared/model/movieSlice';
 
 const mockSetSearchParams = vi.fn();
 const mockSearchParams = new URLSearchParams();

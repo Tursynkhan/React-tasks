@@ -3,19 +3,15 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Box from '@mui/material/Box';
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
-import Field from '@/shared/ui/Field/Field';
+import { Field } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
-import {
-  login,
-  selectAuthError,
-  selectStatus,
-} from '@/shared/model/authSlice/authSlice';
+import { login, selectAuthError, selectStatus } from '@/shared/model/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const schema = z.object({
   email: z.string().email('Invalid email address'),
-  password: z.string(),
+  password: z.string().min(1, 'Password is required'),
 });
 type LoginFormValues = z.infer<typeof schema>;
 

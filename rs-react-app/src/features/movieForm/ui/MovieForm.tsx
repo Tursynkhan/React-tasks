@@ -6,9 +6,7 @@ import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
 import { Box } from '@mui/material';
 import { toast } from 'react-toastify';
-import Field from '@/shared/ui/Field/Field';
-import MultiSelect from '@/shared/ui/MultiSelect/MultiSelect';
-import DatePicker from '@/shared/ui/DatePicker/DatePicker';
+import { Field, MultiSelect, DatePicker } from '@/shared/ui';
 import { GENRES as genres } from '../model/genres';
 import {
   createMovie,
@@ -16,7 +14,7 @@ import {
   selectCreateStatus,
   selectEditStatus,
   selectMoviesError,
-} from '@/shared/model/movieSlice/movieSlice';
+} from '@/shared/model/movieSlice';
 
 const schema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -119,7 +117,7 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', sm: '0.6fr 0.4fr' },
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
             gap: 3,
             alignItems: 'start',
           }}
@@ -223,24 +221,25 @@ const MovieForm = React.forwardRef<MovieFormHandle, MovieFormProps>(
               />
             )}
           />
-          <Box sx={{ gridColumn: '1/-1' }}>
-            <Controller
-              name="overview"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field
-                  {...field}
-                  multiline
-                  rows={3}
-                  label="Overview"
-                  placeholder="Movie description"
-                  required
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            />
-          </Box>
+        </Box>
+        <Box sx={{ display: 'grid', gridColumn: '1/-1' }}>
+          <Controller
+            name="overview"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field
+                {...field}
+                fullWidth
+                multiline
+                rows={3}
+                label="Overview"
+                placeholder="Movie description"
+                required
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+              />
+            )}
+          />
         </Box>
       </Box>
     );

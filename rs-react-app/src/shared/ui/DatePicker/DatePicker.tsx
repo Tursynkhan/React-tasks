@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, FormLabel, TextField } from '@mui/material';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 interface DatePickerProps {
   label: string;
@@ -39,7 +39,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
           sx={{
             color: COLORS.accent,
             textTransform: 'uppercase',
-            marginBottom: 1,
+            mb: 0.5,
           }}
         >
           {label}
@@ -62,7 +62,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
           sx={{
             '& .MuiInputBase-root': {
               backgroundColor: COLORS.field,
-              borderRadius: 0,
+              borderRadius: '4px',
             },
             '& .MuiInputBase-input': {
               color: COLORS.white,
@@ -81,9 +81,6 @@ const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
               {
                 borderColor: COLORS.accent,
               },
-            '& .MuiFormHelperText-root': {
-              marginLeft: 0,
-            },
           }}
         />
       </FormControl>

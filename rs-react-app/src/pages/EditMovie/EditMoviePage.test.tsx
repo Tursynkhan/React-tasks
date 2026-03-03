@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import EditMoviePage from './EditMoviePage';
-import movieReducer from '@/shared/model/movieSlice/movieSlice';
+import movieReducer from '@/shared/model/movieSlice';
 
 const mockNavigate = vi.fn();
 

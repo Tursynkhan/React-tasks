@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import LoginPage from './LoginPage';
-import authReducer from '@/shared/model/authSlice/authSlice';
+import authReducer from '@/shared/model/authSlice';
 
 const createMockStore = (initialState = {}) => {
   return configureStore({

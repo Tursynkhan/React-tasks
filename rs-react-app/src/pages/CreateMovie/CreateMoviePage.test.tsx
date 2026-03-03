@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import CreateMoviePage from './CreateMoviePage';
-import movieReducer from '@/shared/model/movieSlice/movieSlice';
-import authReducer from '@/shared/model/authSlice/authSlice';
+import movieReducer from '@/shared/model/movieSlice';
+import authReducer from '@/shared/model/authSlice';
 
 const mockNavigate = vi.fn();
 

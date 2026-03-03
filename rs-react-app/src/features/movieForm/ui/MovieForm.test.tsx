@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import MovieForm from './MovieForm';
-import movieReducer from '@/shared/model/movieSlice/movieSlice';
+import movieReducer from '@/shared/model/movieSlice';
 import React from 'react';
 
 const createMockStore = (movieState = {}) => {

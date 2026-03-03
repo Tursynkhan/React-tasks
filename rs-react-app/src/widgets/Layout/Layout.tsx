@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 

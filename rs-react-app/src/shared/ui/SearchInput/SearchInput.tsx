@@ -4,7 +4,7 @@ import {
   type SxProps,
   type Theme,
 } from '@mui/material';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 interface SearchInputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

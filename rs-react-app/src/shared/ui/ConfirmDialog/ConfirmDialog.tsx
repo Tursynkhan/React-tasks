@@ -1,6 +1,6 @@
 import React from 'react';
-import { COLORS } from '@/shared/config/theme/palette';
-import useToggleState from '@/shared/lib/useToggleState';
+import { COLORS } from '@/shared/config';
+import { useToggleState } from '@/shared/lib';
 import {
   Dialog,
   DialogTitle,
@@ -9,7 +9,7 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import Button from '@/shared/ui/Button/Button';
+import Button from '../Button/Button';
 import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import MovieCard from './MovieCard';
-import authReducer from '@/shared/model/authSlice/authSlice';
+import authReducer from '@/shared/model/authSlice';
 import type { MovieItem } from '../model/types';
 import type { UserRole } from '@/shared/types';
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import ConfirmDialog from '@/shared/ui/ConfirmDialog/ConfirmDialog';
+import { ConfirmDialog, Button } from '@/shared/ui';
 import { MenuItem } from '@mui/material';
-import Button from '@/shared/ui/Button/Button';
 import { useAppDispatch } from '@/app/store/store';
-import { deleteMovie } from '@/shared/model/movieSlice/movieSlice';
+import { deleteMovie } from '@/shared/model/movieSlice';
 import { MenuContext } from '@/shared/ui/Menu/CompoundMenu';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';

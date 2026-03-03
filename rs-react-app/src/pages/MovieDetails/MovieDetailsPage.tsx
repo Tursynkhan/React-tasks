@@ -2,15 +2,12 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/app/store/store';
 import { Box, Typography } from '@mui/material';
-import Button from '@/shared/ui/Button/Button';
+import { Button } from '@/shared/ui';
 import DeleteMovie from '@/features/movies/deleteMovie/DeleteMovie';
-import { COLORS } from '@/shared/config/theme/palette';
-import {
-  selectCurrentMovie,
-  fetchMovieById,
-} from '@/shared/model/movieSlice/movieSlice';
-import { selectRole } from '@/shared/model/authSlice/authSlice';
-import { formatDuration } from '@/shared/lib/formatDuration';
+import { COLORS } from '@/shared/config';
+import { selectCurrentMovie, fetchMovieById } from '@/shared/model/movieSlice';
+import { selectRole } from '@/shared/model/authSlice';
+import { formatDuration } from '@/shared/lib';
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();

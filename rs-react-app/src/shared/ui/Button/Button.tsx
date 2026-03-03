@@ -2,7 +2,7 @@ import {
   Button as MuiButton,
   type ButtonProps as MuiButtonProps,
 } from '@mui/material';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 type ButtonVariant = 'contained' | 'outlined' | 'admin';
 

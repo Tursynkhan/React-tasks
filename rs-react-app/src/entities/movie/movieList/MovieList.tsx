@@ -13,12 +13,12 @@ import {
   selectEditStatus,
   resetCreateStatus,
   resetEditStatus,
-} from '@/shared/model/movieSlice/movieSlice';
-import { COLORS } from '@/shared/config/theme/palette';
+} from '@/shared/model/movieSlice';
+import { COLORS } from '@/shared/config';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import SuccessDialog from '@/shared/ui/SuccessDialog/SuccessDialog';
+import { SuccessDialog } from '@/shared/ui';
 
 const ITEMS_PER_PAGE = 12;
 

@@ -1,4 +1,4 @@
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 import { ButtonBase, Typography } from '@mui/material';
 
 interface Props {

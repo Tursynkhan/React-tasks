@@ -5,7 +5,7 @@ import {
   FormLabel,
   TextField,
 } from '@mui/material';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 interface FieldProps extends Omit<TextFieldProps, 'label'> {
   label: string;
@@ -19,6 +19,7 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
         sx={{
           color: COLORS.accent,
           textTransform: 'uppercase',
+          mb: 0.5,
         }}
       >
         {label}
@@ -30,7 +31,7 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
         sx={{
           '& .MuiInputBase-root': {
             backgroundColor: COLORS.field,
-            borderRadius: 0,
+            borderRadius: '4px',
           },
           '& .MuiInputBase-input': {
             color: COLORS.white,
@@ -49,6 +50,7 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
             {
               borderColor: COLORS.accent,
             },
+          ...rest.sx,
         }}
       />
     </FormControl>

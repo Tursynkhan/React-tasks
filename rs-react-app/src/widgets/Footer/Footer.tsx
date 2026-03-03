@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 export default function Footer() {
   return (

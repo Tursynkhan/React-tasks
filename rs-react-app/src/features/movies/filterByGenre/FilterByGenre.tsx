@@ -2,9 +2,9 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import GenreTabs from './ui/GenreTabs';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 import { useAppSelector } from '@/app/store/store';
-import { selectMovies } from '@/shared/model/movieSlice/movieSlice';
+import { selectMovies } from '@/shared/model/movieSlice';
 
 export default function FilterByGenre() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,11 +52,12 @@ export default function FilterByGenre() {
   return (
     <Box
       sx={{
+        maxWidth: '1440px',
         display: 'flex',
         gap: 3,
         alignItems: 'center',
         bgcolor: COLORS.bg,
-        px: { xs: 2, sm: 4, md: 7.5 },
+        px: { xs: 4, sm: 8, md: 7.5 },
         py: 2,
         overflowX: 'auto',
         '&::-webkit-scrollbar': {

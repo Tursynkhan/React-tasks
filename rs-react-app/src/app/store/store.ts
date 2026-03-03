@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '@/shared/model/authSlice/authSlice';
-import movieReducer from '@/shared/model/movieSlice/movieSlice';
+import authReducer from '@/shared/model/authSlice';
+import movieReducer from '@/shared/model/movieSlice';
 import {
   type TypedUseSelectorHook,
   useDispatch,

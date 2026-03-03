@@ -1,11 +1,11 @@
 import { Box, Typography, IconButton, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MovieIcon from '@mui/icons-material/Movie';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 import type { MovieItem } from '../model/types';
 import { useAppSelector } from '@/app/store/store';
-import { selectRole } from '@/shared/model/authSlice/authSlice';
-import Menu from '@/shared/ui/Menu';
+import { selectRole } from '@/shared/model/authSlice';
+import { Menu } from '@/shared/ui';
 import { useNavigate } from 'react-router-dom';
 import DeleteMovie from '@/features/movies/deleteMovie/DeleteMovie';
 
@@ -106,15 +106,18 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
             gap: 1,
           }}
         >
-          <Typography sx={{ color: COLORS.white, fontSize: 18 }} noWrap>
+          <Typography sx={{ color: COLORS.white, fontSize: 18, mb: 2 }} noWrap>
             {movie.title}
           </Typography>
 
           {!!year && (
             <Box
               sx={{
+                padding: '4px 8px',
                 fontSize: 14,
                 color: COLORS.white,
+                border: '1px solid #fff',
+                borderRadius: '4px',
               }}
             >
               {year}
@@ -122,7 +125,14 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
           )}
         </Box>
 
-        <Typography sx={{ fontSize: 14, fontWeight: 500, color: COLORS.white }}>
+        <Typography
+          sx={{
+            fontSize: 14,
+            fontWeight: 500,
+            color: COLORS.white,
+            opacity: 0.7,
+          }}
+        >
           {(movie.genres ?? []).join(', ')}
         </Typography>
       </Box>

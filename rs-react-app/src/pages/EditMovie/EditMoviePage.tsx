@@ -1,8 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Button from '@/shared/ui/Button/Button';
+import { Button, Dialog } from '@/shared/ui';
 import { toast } from 'react-toastify';
-import Dialog from '@/shared/ui/Dialog/Dialog';
 import MovieForm, {
   type MovieFormHandle,
 } from '@/features/movieForm/ui/MovieForm';
@@ -11,7 +10,7 @@ import {
   fetchMovieById,
   selectCurrentMovie,
   selectCurrentMovieStatus,
-} from '@/shared/model/movieSlice/movieSlice';
+} from '@/shared/model/movieSlice';
 
 export default function EditMoviePage() {
   const { movieId } = useParams();

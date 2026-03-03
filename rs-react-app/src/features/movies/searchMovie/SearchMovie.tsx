@@ -1,9 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import Button from '@/shared/ui/Button/Button';
-import SearchInput from '@/shared/ui/SearchInput/SearchInput';
+import { Button, SearchInput } from '@/shared/ui';
 import { useSearchParams } from 'react-router-dom';
-import { COLORS } from '@/shared/config/theme/palette';
+import { COLORS } from '@/shared/config';
 
 export default function SearchMovie() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,7 +43,7 @@ export default function SearchMovie() {
       flexDirection={{ xs: 'column', sm: 'row' }}
       alignItems={{ xs: 'stretch', sm: 'center' }}
       gap={{ xs: 1, sm: 2 }}
-      width={{ xs: '100%', sm: 'auto' }}
+      width="100%"
     >
       <SearchInput
         placeholder="What do you want to watch?"
@@ -52,14 +51,18 @@ export default function SearchMovie() {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         sx={{
+          flex: 1,
           bgcolor: '#323232',
           color: COLORS.white,
           borderRadius: '4px',
-          fontSize: 16,
           '& input::placeholder': { color: COLORS.muted, opacity: 1 },
         }}
       />
-      <Button variant="contained" onClick={handleOnClick}>
+      <Button
+        variant="contained"
+        onClick={handleOnClick}
+        sx={{ minWidth: 150 }}
+      >
         Search
       </Button>
     </Box>

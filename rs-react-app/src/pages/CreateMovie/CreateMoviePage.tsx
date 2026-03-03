@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '@/shared/ui/Button/Button';
-import Dialog from '@/shared/ui/Dialog/Dialog';
+import { Button, Dialog } from '@/shared/ui';
 import MovieForm, {
   type MovieFormHandle,
 } from '@/features/movieForm/ui/MovieForm';

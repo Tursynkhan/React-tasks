@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { theme } from '@/shared/config/theme/theme';
+import { theme } from '@/shared/config';
 import Layout from '@/widgets/Layout/Layout';
 import HomePage from '@/pages/HomePage/HomePage';
 import LoginPage from '@/pages/Login/LoginPage';
@@ -13,7 +13,7 @@ import MovieDetailsPage from '@/pages/MovieDetails/MovieDetailsPage';
 import EditMoviePage from '@/pages/EditMovie/EditMoviePage';
 import CreateMoviePage from '@/pages/CreateMovie/CreateMoviePage';
 import { useAppSelector } from '@/app/store/store';
-import { selectIsAuthenticated } from '@/shared/model/authSlice/authSlice';
+import { selectIsAuthenticated } from '@/shared/model/authSlice';
 
 function Redirect() {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
