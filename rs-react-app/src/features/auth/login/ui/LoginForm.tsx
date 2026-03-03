@@ -59,6 +59,7 @@ const LoginForm = React.forwardRef<LoginFormRef>((_props, ref) => {
       component="form"
       id="login-form"
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
       sx={{
         display: 'flex',
         flexDirection: 'column',
