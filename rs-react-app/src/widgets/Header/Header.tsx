@@ -34,6 +34,9 @@ export default function Header() {
   const handleLogin = () => {
     navigate('/login');
   };
+  const handleLogoClick = () => {
+    navigate('/');
+  };
   return (
     <Box>
       <AppBar
@@ -50,7 +53,9 @@ export default function Header() {
             alignItems: 'center',
           }}
         >
-          <Typography>netflixroulette</Typography>
+          <Typography onClick={handleLogoClick} sx={{ cursor: 'pointer' }}>
+            netflixroulette
+          </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {role === 'admin' && (
               <Button
