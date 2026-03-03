@@ -1,6 +1,5 @@
 import type { MovieItem, MoviesParams } from '../model/types';
-
-const API_URL = import.meta.env.VITE_API_BASE_URL;
+import { apiClient } from '@/shared/api/client';
 
 interface BaseResponse<T> {
   data: T;
@@ -43,36 +42,12 @@ export async function movieApi(
   params?: MoviesParams
 ): Promise<MovieResponse<MovieItem[]>> {
   const query = buildQuery(params);
-  const url = `${API_URL}/movies${query ? `?${query}` : ''}`;
-
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Login failed');
-  }
-
-  const data = await response.json();
-  return data;
+  const endpoint = `/movies${query ? `?${query}` : ''}`;
+  return apiClient.get<MovieResponse<MovieItem[]>>(endpoint);
 }
 
 export async function fetchMovieByIdApi(
   id: number
 ): Promise<BaseResponse<MovieItem>> {
-  const response = await fetch(`${API_URL}/movies/${id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  if (!response.ok) {
-    throw new Error('FethMovieById failed');
-  }
-
-  const data = await response.json();
-  return data;
+  return apiClient.get<BaseResponse<MovieItem>>(`/movies/${id}`);
 }

@@ -1,6 +1,5 @@
 import type { UserRole } from '@/shared/types';
-
-const API_URL = import.meta.env.VITE_API_BASE_URL;
+import { apiClient } from '@/shared/api/client';
 
 interface BaseResponse<T> {
   data: T;
@@ -19,18 +18,8 @@ export async function loginApi(query: {
   password: string;
 }): Promise<BaseResponse<LoginResponse>> {
   const { email, password } = query;
-  const response = await fetch(`${API_URL}/me/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
+  return apiClient.post<BaseResponse<LoginResponse>>('/me/login', {
+    email,
+    password,
   });
-
-  if (!response.ok) {
-    throw new Error('Login failed');
-  }
-
-  const data = await response.json();
-  return data;
 }

@@ -1,6 +1,5 @@
 import type { MovieItem } from '@/entities/movie/model/types';
-
-const API_URL = import.meta.env.VITE_API_BASE_URL;
+import { apiClient } from '@/shared/api/client';
 
 interface BaseResponse<T> {
   data: T;
@@ -21,18 +20,8 @@ export async function editMovieApi(
   movieId: number,
   movieData: EditMovieData
 ): Promise<BaseResponse<MovieItem>> {
-  const response = await fetch(`${API_URL}/movies/${movieId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ ...movieData, id: movieId }),
+  return apiClient.put<BaseResponse<MovieItem>>(`/movies/${movieId}`, {
+    ...movieData,
+    id: movieId,
   });
-
-  if (!response.ok) {
-    throw new Error('Failed to update movie');
-  }
-
-  const data = await response.json();
-  return data;
 }
