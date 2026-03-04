@@ -2,14 +2,12 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Dialog } from '@/shared/ui';
 import { toast } from 'react-toastify';
-import MovieForm, {
-  type MovieFormHandle,
-} from '@/features/movieForm/ui/MovieForm';
-import { useAppDispatch, useAppSelector } from '@/app/store/store';
+import { MovieForm, type MovieFormHandle } from '@/features/movieForm';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
-  fetchMovieById,
   selectCurrentMovie,
   selectCurrentMovieStatus,
+  fetchMovieById,
 } from '@/shared/model/movieSlice';
 
 export default function EditMoviePage() {

@@ -59,23 +59,7 @@ export const authSlice = createSlice({
         state.errorMessage = (action.payload as string) ?? 'Login failed';
       });
   },
-  selectors: {
-    selectName: (state) => state.user?.name,
-    selectIsAuthenticated: (state) => !!state.user?.token,
-    selectRole: (state) => state.user?.role,
-    selectAuthError: (state) => state.errorMessage,
-    selectUser: (state) => state.user,
-    selectStatus: (state) => state.status,
-  },
 });
 
 export const { logout, clearError } = authSlice.actions;
-export const {
-  selectName,
-  selectIsAuthenticated,
-  selectRole,
-  selectStatus,
-  selectAuthError,
-  selectUser,
-} = authSlice.selectors;
 export default authSlice.reducer;

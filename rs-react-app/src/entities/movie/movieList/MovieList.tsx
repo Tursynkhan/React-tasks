@@ -1,16 +1,16 @@
 import React from 'react';
 import { Box, CircularProgress, Pagination } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '@/app/store/store';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import MoviesCount from './ui/MovieCount';
 import MovieCard from '../movieCard/MovieCard';
 import {
-  fetchMovie,
   selectMoviesError,
   selectMoviesStatus,
   selectMovies,
   selectTotalAmount,
   selectCreateStatus,
   selectEditStatus,
+  fetchMovie,
   resetCreateStatus,
   resetEditStatus,
 } from '@/shared/model/movieSlice';

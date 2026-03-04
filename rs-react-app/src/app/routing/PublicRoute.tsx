@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../store/store';
+import { useAppSelector } from '../store/hooks';
 import { selectIsAuthenticated } from '@/shared/model/authSlice';
 
 export function PublicRoute() {

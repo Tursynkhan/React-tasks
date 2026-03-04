@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import GenreTabs from './ui/GenreTabs';
 import { COLORS } from '@/shared/config';
-import { useAppSelector } from '@/app/store/store';
+import { useAppSelector } from '@/app/store/hooks';
 import { selectMovies } from '@/shared/model/movieSlice';
 
 export default function FilterByGenre() {

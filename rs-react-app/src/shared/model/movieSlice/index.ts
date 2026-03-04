@@ -1,3 +1,5 @@
+export { default as movieReducer } from './movieSlice';
+export { clearError, resetCreateStatus, resetEditStatus } from './movieSlice';
 export {
   fetchMovie,
   deleteMovie,
@@ -5,22 +7,15 @@ export {
   editMovie,
   fetchMovieById,
 } from './thunks';
-
 export {
-  clearError,
-  resetCreateStatus,
-  resetEditStatus,
-  selectMoviesError,
-  selectMovies,
   selectMoviesStatus,
+  selectMovies,
+  selectMoviesError,
   selectDeleteStatus,
   selectCreateStatus,
   selectEditStatus,
   selectCurrentMovie,
   selectCurrentMovieStatus,
   selectTotalAmount,
-} from './movieSlice';
-
-export type { MovieState, Status } from './types';
-
-export { default } from './movieSlice';
+} from './selectors';
+export type { MovieState } from './types';

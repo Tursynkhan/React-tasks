@@ -1,14 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { movieApi, fetchMovieByIdApi } from '@/entities/movie/api/movieApi';
-import { deleteMovieApi } from '@/features/movies/deleteMovie/api/deleteMovieApi';
+import { deleteMovieApi } from '@/features/movies/deleteMovie';
 import {
   createMovieApi,
   type CreateMovieData,
-} from '@/features/movies/createMovie/api/createMovie';
-import {
-  editMovieApi,
-  type EditMovieData,
-} from '@/features/movies/editMovie/api/editMovieApi';
+} from '@/features/movies/createMovie';
+import { editMovieApi, type EditMovieData } from '@/features/movies/editMovie';
 import type { MoviesParams } from '@/entities/movie/model/types';
 
 export const fetchMovie = createAsyncThunk(

@@ -3,11 +3,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MovieIcon from '@mui/icons-material/Movie';
 import { COLORS } from '@/shared/config';
 import type { MovieItem } from '../model/types';
-import { useAppSelector } from '@/app/store/store';
+import { useAppSelector } from '@/app/store/hooks';
 import { selectRole } from '@/shared/model/authSlice';
 import { Menu } from '@/shared/ui';
 import { useNavigate } from 'react-router-dom';
-import DeleteMovie from '@/features/movies/deleteMovie/DeleteMovie';
+import { DeleteMovie } from '@/features/movies/deleteMovie';
 
 interface MovieCardProps {
   movie: MovieItem;

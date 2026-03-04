@@ -1,16 +1,12 @@
+export { default as authReducer } from './authSlice';
+export { logout, clearError } from './authSlice';
 export { login } from './thunks';
-
 export {
-  logout,
-  clearError,
   selectName,
   selectIsAuthenticated,
   selectRole,
-  selectStatus,
   selectAuthError,
   selectUser,
-} from './authSlice';
-
-export type { AuthState, Status } from './types';
-
-export { default } from './authSlice';
+  selectStatus,
+} from './selectors';
+export type { AuthState } from './types';

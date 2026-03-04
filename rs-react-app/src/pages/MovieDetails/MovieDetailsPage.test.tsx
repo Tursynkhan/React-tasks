@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import MovieDetailsPage from './MovieDetailsPage';
-import authReducer from '@/shared/model/authSlice';
-import movieReducer from '@/shared/model/movieSlice';
+import authReducer from '@/shared/model/authSlice/authSlice';
+import movieReducer from '@/shared/model/movieSlice/movieSlice';
 import type { UserRole } from '@/shared/types';
 
 const mockMovie = {

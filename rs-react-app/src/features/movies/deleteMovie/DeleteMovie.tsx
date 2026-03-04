@@ -1,7 +1,7 @@
 import React from 'react';
 import { ConfirmDialog, Button } from '@/shared/ui';
 import { MenuItem } from '@mui/material';
-import { useAppDispatch } from '@/app/store/store';
+import { useAppDispatch } from '@/app/store/hooks';
 import { deleteMovie } from '@/shared/model/movieSlice';
 import { MenuContext } from '@/shared/ui/Menu/CompoundMenu';
 import { toast } from 'react-toastify';

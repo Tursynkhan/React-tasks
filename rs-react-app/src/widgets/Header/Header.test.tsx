@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import Header from './Header';
-import authReducer from '@/shared/model/authSlice';
+import authReducer from '@/shared/model/authSlice/authSlice';
 
 const mockNavigate = vi.fn();
 

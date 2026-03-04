@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
-import Hero from '@/widgets/Hero/Hero';
+import { Hero, MoviesToolbar } from '@/widgets';
 import MovieList from '@/entities/movie/movieList/MovieList';
-import MoviesToolbar from '@/widgets/MoviesToolbar/MoviesToolbar';
 
 export default function HomePage() {
   return (

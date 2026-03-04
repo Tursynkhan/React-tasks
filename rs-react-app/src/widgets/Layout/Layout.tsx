@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { COLORS } from '@/shared/config';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import { Header } from '../Header';
+import { Footer } from '../Footer';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

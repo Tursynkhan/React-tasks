@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@/app/store/store';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { Box, Typography } from '@mui/material';
 import { Button } from '@/shared/ui';
-import DeleteMovie from '@/features/movies/deleteMovie/DeleteMovie';
+import { DeleteMovie } from '@/features/movies/deleteMovie';
 import { COLORS } from '@/shared/config';
 import { selectCurrentMovie, fetchMovieById } from '@/shared/model/movieSlice';
 import { selectRole } from '@/shared/model/authSlice';

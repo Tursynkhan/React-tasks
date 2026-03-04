@@ -1,9 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Dialog } from '@/shared/ui';
-import MovieForm, {
-  type MovieFormHandle,
-} from '@/features/movieForm/ui/MovieForm';
+import { MovieForm, type MovieFormHandle } from '@/features/movieForm';
 
 export default function CreateMoviePage() {
   const navigate = useNavigate();

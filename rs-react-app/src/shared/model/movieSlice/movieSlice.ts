@@ -119,31 +119,9 @@ export const movieSlice = createSlice({
           (action.payload as string) ?? 'Failed to edit movie';
       });
   },
-  selectors: {
-    selectMoviesStatus: (state) => state.status,
-    selectMovies: (state) => state.movies,
-    selectMoviesError: (state) => state.errorMessage,
-    selectDeleteStatus: (state) => state.deleteStatus,
-    selectCreateStatus: (state) => state.createStatus,
-    selectEditStatus: (state) => state.editStatus,
-    selectCurrentMovie: (state) => state.currentMovie,
-    selectCurrentMovieStatus: (state) => state.currentMovieStatus,
-    selectTotalAmount: (state) => state.totalAmount,
-  },
 });
 
 export const { clearError, resetCreateStatus, resetEditStatus } =
   movieSlice.actions;
-export const {
-  selectMoviesError,
-  selectMovies,
-  selectMoviesStatus,
-  selectDeleteStatus,
-  selectCreateStatus,
-  selectEditStatus,
-  selectCurrentMovie,
-  selectCurrentMovieStatus,
-  selectTotalAmount,
-} = movieSlice.selectors;
 
 export default movieSlice.reducer;

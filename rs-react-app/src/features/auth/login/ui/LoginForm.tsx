@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Box from '@mui/material/Box';
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { Field } from '@/shared/ui';
-import { useAppDispatch, useAppSelector } from '@/app/store/store';
-import { login, selectAuthError, selectStatus } from '@/shared/model/authSlice';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { selectAuthError, selectStatus, login } from '@/shared/model/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 

@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '@/app/store/store';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { Box } from '@mui/material';
 import { toast } from 'react-toastify';
 import { Field, MultiSelect, DatePicker } from '@/shared/ui';
@@ -15,7 +15,6 @@ import {
   selectEditStatus,
   selectMoviesError,
 } from '@/shared/model/movieSlice';
-
 const schema = z.object({
   title: z.string().min(1, 'Title is required'),
   release_date: z.string().min(1, 'Release date is required'),
