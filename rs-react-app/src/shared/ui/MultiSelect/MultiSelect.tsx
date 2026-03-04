@@ -48,6 +48,9 @@ export default function MultiSelect({
           color: COLORS.accent,
           textTransform: 'uppercase',
           mb: 0.5,
+          '&.Mui-focused': {
+            color: COLORS.accent,
+          },
         }}
       >
         {label}

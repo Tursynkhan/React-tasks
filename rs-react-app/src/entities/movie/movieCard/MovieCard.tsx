@@ -76,13 +76,14 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
       <Box sx={{ p: 1.5 }}>
         <Box
           sx={{
+            mb: 2,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             gap: 1,
           }}
         >
-          <Typography sx={{ color: COLORS.white, fontSize: 18, mb: 2 }} noWrap>
+          <Typography sx={{ color: COLORS.white, fontSize: 18 }} noWrap>
             {movie.title}
           </Typography>
 
