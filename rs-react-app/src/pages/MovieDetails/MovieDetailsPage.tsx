@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { Box, Typography } from '@mui/material';
-import { Button } from '@/shared/ui';
+import { Button, MoviePoster } from '@/shared/ui';
 import { DeleteMovie } from '@/features/movies/deleteMovie';
 import { COLORS } from '@/shared/config';
 import { selectCurrentMovie, fetchMovieById } from '@/shared/model/movieSlice';
@@ -60,18 +60,13 @@ export default function MovieDetailsPage() {
             alignItems: 'start',
           }}
         >
-          <Box
-            sx={{
-              width: '100%',
-              maxWidth: 360,
-              aspectRatio: '2 / 3',
-              backgroundImage: movie?.poster_path
-                ? `url(${movie.poster_path})`
-                : 'none',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
+          <Box sx={{ width: '100%', maxWidth: 360 }}>
+            <MoviePoster
+              src={movie?.poster_path}
+              alt={movie?.title || 'Movie poster'}
+              showIcon={false}
+            />
+          </Box>
 
           <Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>

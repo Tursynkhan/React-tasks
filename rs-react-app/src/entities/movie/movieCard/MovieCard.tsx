@@ -1,11 +1,10 @@
 import { Box, Typography, IconButton, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import MovieIcon from '@mui/icons-material/Movie';
 import { COLORS } from '@/shared/config';
 import type { MovieItem } from '../model/types';
 import { useAppSelector } from '@/app/store/hooks';
 import { selectRole } from '@/shared/model/authSlice';
-import { Menu } from '@/shared/ui';
+import { Menu, MoviePoster } from '@/shared/ui';
 import { useNavigate } from 'react-router-dom';
 import { DeleteMovie } from '@/features/movies/deleteMovie';
 
@@ -72,31 +71,8 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
         </Box>
       )}
 
-      <Box
-        sx={{
-          width: '100%',
-          aspectRatio: '2 / 3',
-          backgroundImage: movie.poster_path
-            ? `url(${movie.poster_path})`
-            : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          bgcolor: movie.poster_path ? 'transparent' : COLORS.field,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {!movie.poster_path && (
-          <MovieIcon
-            sx={{
-              fontSize: 80,
-              color: COLORS.muted,
-              opacity: 0.5,
-            }}
-          />
-        )}
-      </Box>
+      <MoviePoster src={movie.poster_path} alt={movie.title} />
+
       <Box sx={{ p: 1.5 }}>
         <Box
           sx={{
