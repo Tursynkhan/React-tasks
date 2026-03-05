@@ -1,0 +1,39 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Dialog } from '@/shared/ui';
+import { MovieForm, type MovieFormHandle } from '@/features/movieForm';
+
+export default function CreateMoviePage() {
+  const navigate = useNavigate();
+  const formRef = React.useRef<MovieFormHandle>(null);
+
+  const handleReset = () => {
+    formRef.current?.resetForm();
+  };
+
+  const handleClose = () => {
+    navigate('/');
+  };
+
+  return (
+    <Dialog
+      open
+      title="Create Movie"
+      maxWidth="sm"
+      fullWidth
+      onClose={handleClose}
+      actions={
+        <>
+          <Button variant="outlined" onClick={handleReset}>
+            Reset
+          </Button>
+          <Button variant="contained" type="submit" form="add-movie-form">
+            Submit
+          </Button>
+        </>
+      }
+    >
+      <MovieForm ref={formRef} />
+    </Dialog>
+  );
+}
