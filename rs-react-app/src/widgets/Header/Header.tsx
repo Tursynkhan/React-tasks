@@ -121,6 +121,7 @@ export default function Header() {
                   <MenuItem
                     onClick={() => {
                       dispatch(logout());
+                      navigate('/');
                     }}
                     sx={{
                       justifyContent: 'center',
