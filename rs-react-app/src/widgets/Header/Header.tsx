@@ -16,10 +16,11 @@ import {
   selectRole,
   logout,
 } from '@/shared/model/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const isAuthentificated = useSelector(selectIsAuthenticated);
   const userName = useSelector(selectName);
@@ -59,7 +60,7 @@ export default function Header() {
             netflixroulette
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            {role === 'admin' && (
+            {role === 'admin' && location.pathname === '/' && (
               <Button
                 onClick={handleAddMovie}
                 variant="admin"
